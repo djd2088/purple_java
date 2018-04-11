@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiUserDao">
+    
+	<sql id="ruiUserColumns">
+		a.id AS "id",
+		a.username AS "username",
+		a.pswd AS "pswd",
+		a.sex AS "sex",
+		a.nickname AS "nickname",
+		a.phone AS "phone"
+	</sql>
+	
+	<sql id="ruiUserJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiUser">
+		SELECT 
+			<include refid="ruiUserColumns"/>
+		FROM rui_user a
+		<include refid="ruiUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiUser">
+		SELECT 
+			<include refid="ruiUserColumns"/>
+		FROM rui_user a
+		<include refid="ruiUserJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiUser">
+		SELECT 
+			<include refid="ruiUserColumns"/>
+		FROM rui_user a
+		<include refid="ruiUserJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_user(
+			id,
+			username,
+			pswd,
+			sex,
+			nickname,
+			phone
+		) VALUES (
+			#{id},
+			#{username},
+			#{pswd},
+			#{sex},
+			#{nickname},
+			#{phone}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_user SET 	
+			username = #{username},
+			pswd = #{pswd},
+			sex = #{sex},
+			nickname = #{nickname},
+			phone = #{phone}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_user
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
