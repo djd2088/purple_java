@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiProductPictureDao">
+    
+	<sql id="ruiProductPictureColumns">
+		a.id AS "id",
+		a.product_id AS "productId",
+		a.name AS "name",
+		a.is_main_pic AS "isMainPic",
+		a.pic_url AS "picUrl",
+		a.sort AS "sort",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiProductPictureJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiProductPicture">
+		SELECT 
+			<include refid="ruiProductPictureColumns"/>
+		FROM rui_product_picture a
+		<include refid="ruiProductPictureJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiProductPicture">
+		SELECT 
+			<include refid="ruiProductPictureColumns"/>
+		FROM rui_product_picture a
+		<include refid="ruiProductPictureJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiProductPicture">
+		SELECT 
+			<include refid="ruiProductPictureColumns"/>
+		FROM rui_product_picture a
+		<include refid="ruiProductPictureJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_product_picture(
+			id,
+			product_id,
+			name,
+			is_main_pic,
+			pic_url,
+			sort,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{productId},
+			#{name},
+			#{isMainPic},
+			#{picUrl},
+			#{sort},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_product_picture SET 	
+			product_id = #{productId},
+			name = #{name},
+			is_main_pic = #{isMainPic},
+			pic_url = #{picUrl},
+			sort = #{sort},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_product_picture
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

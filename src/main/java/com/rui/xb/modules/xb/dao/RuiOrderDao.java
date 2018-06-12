@@ -5,7 +5,7 @@ package com.rui.xb.modules.xb.dao;
 
 import com.rui.xb.common.persistence.CrudDao;
 import com.rui.xb.common.persistence.annotation.MyBatisDao;
-import com.rui.xb.modules.xb.entity.RuiUser;
+import com.rui.xb.modules.xb.entity.RuiOrder;
 
 /**
  * 单表生成DAO接口
@@ -13,6 +13,6 @@ import com.rui.xb.modules.xb.entity.RuiUser;
  * @version 2018-06-12
  */
 @MyBatisDao
-public interface RuiUserDao extends CrudDao<RuiUser> {
+public interface RuiOrderDao extends CrudDao<RuiOrder> {
 	
 }

@@ -19,8 +19,8 @@ import com.rui.xb.common.config.Global;
 import com.rui.xb.common.persistence.Page;
 import com.rui.xb.common.web.BaseController;
 import com.rui.xb.common.utils.StringUtils;
-import com.rui.xb.modules.xb.entity.RuiUser;
-import com.rui.xb.modules.xb.service.RuiUserService;
+import com.rui.xb.modules.xb.entity.RuiOrder;
+import com.rui.xb.modules.xb.service.RuiOrderService;
 
 /**
  * 单表生成Controller
@@ -28,56 +28,56 @@ import com.rui.xb.modules.xb.service.RuiUserService;
  * @version 2018-06-12
  */
 @Controller
-@RequestMapping(value = "${adminPath}/xb/ruiUser")
-public class RuiUserController extends BaseController {
+@RequestMapping(value = "${adminPath}/xb/ruiOrder")
+public class RuiOrderController extends BaseController {
 
 	@Autowired
-	private RuiUserService ruiUserService;
+	private RuiOrderService ruiOrderService;
 	
 	@ModelAttribute
-	public RuiUser get(@RequestParam(required=false) String id) {
-		RuiUser entity = null;
+	public RuiOrder get(@RequestParam(required=false) String id) {
+		RuiOrder entity = null;
 		if (StringUtils.isNotBlank(id)){
-			entity = ruiUserService.get(id);
+			entity = ruiOrderService.get(id);
 		}
 		if (entity == null){
-			entity = new RuiUser();
+			entity = new RuiOrder();
 		}
 		return entity;
 	}
 	
-	@RequiresPermissions("xb:ruiUser:view")
+	@RequiresPermissions("xb:ruiOrder:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(RuiUser ruiUser, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<RuiUser> page = ruiUserService.findPage(new Page<RuiUser>(request, response), ruiUser); 
+	public String list(RuiOrder ruiOrder, HttpServletRequest request, HttpServletResponse response, Model model) {
+		Page<RuiOrder> page = ruiOrderService.findPage(new Page<RuiOrder>(request, response), ruiOrder); 
 		model.addAttribute("page", page);
-		return "modules/xb/ruiUserList";
+		return "modules/xb/ruiOrderList";
 	}
 
-	@RequiresPermissions("xb:ruiUser:view")
+	@RequiresPermissions("xb:ruiOrder:view")
 	@RequestMapping(value = "form")
-	public String form(RuiUser ruiUser, Model model) {
-		model.addAttribute("ruiUser", ruiUser);
-		return "modules/xb/ruiUserForm";
+	public String form(RuiOrder ruiOrder, Model model) {
+		model.addAttribute("ruiOrder", ruiOrder);
+		return "modules/xb/ruiOrderForm";
 	}
 
-	@RequiresPermissions("xb:ruiUser:edit")
+	@RequiresPermissions("xb:ruiOrder:edit")
 	@RequestMapping(value = "save")
-	public String save(RuiUser ruiUser, Model model, RedirectAttributes redirectAttributes) {
-		if (!beanValidator(model, ruiUser)){
-			return form(ruiUser, model);
+	public String save(RuiOrder ruiOrder, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, ruiOrder)){
+			return form(ruiOrder, model);
 		}
-		ruiUserService.save(ruiUser);
+		ruiOrderService.save(ruiOrder);
 		addMessage(redirectAttributes, "保存单表成功");
-		return "redirect:"+Global.getAdminPath()+"/xb/ruiUser/?repage";
+		return "redirect:"+Global.getAdminPath()+"/xb/ruiOrder/?repage";
 	}
 	
-	@RequiresPermissions("xb:ruiUser:edit")
+	@RequiresPermissions("xb:ruiOrder:edit")
 	@RequestMapping(value = "delete")
-	public String delete(RuiUser ruiUser, RedirectAttributes redirectAttributes) {
-		ruiUserService.delete(ruiUser);
+	public String delete(RuiOrder ruiOrder, RedirectAttributes redirectAttributes) {
+		ruiOrderService.delete(ruiOrder);
 		addMessage(redirectAttributes, "删除单表成功");
-		return "redirect:"+Global.getAdminPath()+"/xb/ruiUser/?repage";
+		return "redirect:"+Global.getAdminPath()+"/xb/ruiOrder/?repage";
 	}
 
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiBugAdviceDao">
+    
+	<sql id="ruiBugAdviceColumns">
+		a.id AS "id",
+		a.content AS "content",
+		a.user_id AS "user.id",
+		a.create_time AS "createTime",
+		a.is_deal AS "isDeal",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3",
+		u3.name AS "user.name"
+	</sql>
+	
+	<sql id="ruiBugAdviceJoins">
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiBugAdvice">
+		SELECT 
+			<include refid="ruiBugAdviceColumns"/>
+		FROM rui_bug_advice a
+		<include refid="ruiBugAdviceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiBugAdvice">
+		SELECT 
+			<include refid="ruiBugAdviceColumns"/>
+		FROM rui_bug_advice a
+		<include refid="ruiBugAdviceJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiBugAdvice">
+		SELECT 
+			<include refid="ruiBugAdviceColumns"/>
+		FROM rui_bug_advice a
+		<include refid="ruiBugAdviceJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_bug_advice(
+			id,
+			content,
+			user_id,
+			create_time,
+			is_deal,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{content},
+			#{user.id},
+			#{createTime},
+			#{isDeal},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_bug_advice SET 	
+			content = #{content},
+			user_id = #{user.id},
+			create_time = #{createTime},
+			is_deal = #{isDeal},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_bug_advice
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

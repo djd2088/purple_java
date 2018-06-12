@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rui.xb.common.persistence.Page;
 import com.rui.xb.common.service.CrudService;
-import com.rui.xb.modules.xb.entity.RuiUser;
-import com.rui.xb.modules.xb.dao.RuiUserDao;
+import com.rui.xb.modules.xb.entity.RuiOrderItem;
+import com.rui.xb.modules.xb.dao.RuiOrderItemDao;
 
 /**
  * 单表生成Service
@@ -20,28 +20,28 @@ import com.rui.xb.modules.xb.dao.RuiUserDao;
  */
 @Service
 @Transactional(readOnly = true)
-public class RuiUserService extends CrudService<RuiUserDao, RuiUser> {
+public class RuiOrderItemService extends CrudService<RuiOrderItemDao, RuiOrderItem> {
 
-	public RuiUser get(String id) {
+	public RuiOrderItem get(String id) {
 		return super.get(id);
 	}
 	
-	public List<RuiUser> findList(RuiUser ruiUser) {
-		return super.findList(ruiUser);
+	public List<RuiOrderItem> findList(RuiOrderItem ruiOrderItem) {
+		return super.findList(ruiOrderItem);
 	}
 	
-	public Page<RuiUser> findPage(Page<RuiUser> page, RuiUser ruiUser) {
-		return super.findPage(page, ruiUser);
-	}
-	
-	@Transactional(readOnly = false)
-	public void save(RuiUser ruiUser) {
-		super.save(ruiUser);
+	public Page<RuiOrderItem> findPage(Page<RuiOrderItem> page, RuiOrderItem ruiOrderItem) {
+		return super.findPage(page, ruiOrderItem);
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(RuiUser ruiUser) {
-		super.delete(ruiUser);
+	public void save(RuiOrderItem ruiOrderItem) {
+		super.save(ruiOrderItem);
+	}
+	
+	@Transactional(readOnly = false)
+	public void delete(RuiOrderItem ruiOrderItem) {
+		super.delete(ruiOrderItem);
 	}
 	
 }

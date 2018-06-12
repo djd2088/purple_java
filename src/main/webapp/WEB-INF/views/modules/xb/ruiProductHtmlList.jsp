@@ -18,13 +18,16 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/xb/ruiUser/">单表列表</a></li>
-		<shiro:hasPermission name="xb:ruiUser:edit"><li><a href="${ctx}/xb/ruiUser/form">单表添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/xb/ruiProductHtml/">单表列表</a></li>
+		<shiro:hasPermission name="xb:ruiProductHtml:edit"><li><a href="${ctx}/xb/ruiProductHtml/form">单表添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="ruiUser" action="${ctx}/xb/ruiUser/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="ruiProductHtml" action="${ctx}/xb/ruiProductHtml/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>name：</label>
+				<form:input path="name" htmlEscape="false" maxlength="20" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -33,15 +36,19 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<shiro:hasPermission name="xb:ruiUser:edit"><th>操作</th></shiro:hasPermission>
+				<th>name</th>
+				<shiro:hasPermission name="xb:ruiProductHtml:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="ruiUser">
+		<c:forEach items="${page.list}" var="ruiProductHtml">
 			<tr>
-				<shiro:hasPermission name="xb:ruiUser:edit"><td>
-    				<a href="${ctx}/xb/ruiUser/form?id=${ruiUser.id}">修改</a>
-					<a href="${ctx}/xb/ruiUser/delete?id=${ruiUser.id}" onclick="return confirmx('确认要删除该单表吗？', this.href)">删除</a>
+				<td><a href="${ctx}/xb/ruiProductHtml/form?id=${ruiProductHtml.id}">
+					${ruiProductHtml.name}
+				</a></td>
+				<shiro:hasPermission name="xb:ruiProductHtml:edit"><td>
+    				<a href="${ctx}/xb/ruiProductHtml/form?id=${ruiProductHtml.id}">修改</a>
+					<a href="${ctx}/xb/ruiProductHtml/delete?id=${ruiProductHtml.id}" onclick="return confirmx('确认要删除该单表吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

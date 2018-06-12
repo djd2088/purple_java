@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiProductCategoryDao">
+    
+	<sql id="ruiProductCategoryColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.description AS "description",
+		a.parent_id AS "parent.id",
+		a.is_delete AS "isDelete",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiProductCategoryJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiProductCategory">
+		SELECT 
+			<include refid="ruiProductCategoryColumns"/>
+		FROM rui_product_category a
+		<include refid="ruiProductCategoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiProductCategory">
+		SELECT 
+			<include refid="ruiProductCategoryColumns"/>
+		FROM rui_product_category a
+		<include refid="ruiProductCategoryJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiProductCategory">
+		SELECT 
+			<include refid="ruiProductCategoryColumns"/>
+		FROM rui_product_category a
+		<include refid="ruiProductCategoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_product_category(
+			id,
+			name,
+			description,
+			parent_id,
+			is_delete,
+			create_time,
+			update_time,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{name},
+			#{description},
+			#{parent.id},
+			#{isDelete},
+			#{createTime},
+			#{updateTime},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_product_category SET 	
+			name = #{name},
+			description = #{description},
+			parent_id = #{parent.id},
+			is_delete = #{isDelete},
+			create_time = #{createTime},
+			update_time = #{updateTime},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_product_category
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

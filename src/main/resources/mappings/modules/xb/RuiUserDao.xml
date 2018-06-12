@@ -5,10 +5,22 @@
 	<sql id="ruiUserColumns">
 		a.id AS "id",
 		a.username AS "username",
-		a.pswd AS "pswd",
+		a.password AS "password",
 		a.sex AS "sex",
 		a.nickname AS "nickname",
-		a.phone AS "phone"
+		a.phone AS "phone",
+		a.email AS "email",
+		a.is_active AS "isActive",
+		a.is_lock AS "isLock",
+		a.avatar AS "avatar",
+		a.create_time AS "createTime",
+		a.create_ip AS "createIp",
+		a.last_login_time AS "lastLoginTime",
+		a.last_login_ip AS "lastLoginIp",
+		a.update_time AS "updateTime",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
 	</sql>
 	
 	<sql id="ruiUserJoins">
@@ -60,27 +72,63 @@
 		INSERT INTO rui_user(
 			id,
 			username,
-			pswd,
+			password,
 			sex,
 			nickname,
-			phone
+			phone,
+			email,
+			is_active,
+			is_lock,
+			avatar,
+			create_time,
+			create_ip,
+			last_login_time,
+			last_login_ip,
+			update_time,
+			pre1,
+			pre2,
+			pre3
 		) VALUES (
 			#{id},
 			#{username},
-			#{pswd},
+			#{password},
 			#{sex},
 			#{nickname},
-			#{phone}
+			#{phone},
+			#{email},
+			#{isActive},
+			#{isLock},
+			#{avatar},
+			#{createTime},
+			#{createIp},
+			#{lastLoginTime},
+			#{lastLoginIp},
+			#{updateTime},
+			#{pre1},
+			#{pre2},
+			#{pre3}
 		)
 	</insert>
 	
 	<update id="update">
 		UPDATE rui_user SET 	
 			username = #{username},
-			pswd = #{pswd},
+			password = #{password},
 			sex = #{sex},
 			nickname = #{nickname},
-			phone = #{phone}
+			phone = #{phone},
+			email = #{email},
+			is_active = #{isActive},
+			is_lock = #{isLock},
+			avatar = #{avatar},
+			create_time = #{createTime},
+			create_ip = #{createIp},
+			last_login_time = #{lastLoginTime},
+			last_login_ip = #{lastLoginIp},
+			update_time = #{updateTime},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
 		WHERE id = #{id}
 	</update>
 	

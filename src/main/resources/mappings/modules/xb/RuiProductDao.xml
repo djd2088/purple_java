@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiProductDao">
+    
+	<sql id="ruiProductColumns">
+		a.id AS "id",
+		a.category_id AS "categoryId",
+		a.product_code AS "productCode",
+		a.product_name AS "productName",
+		a.product_desc AS "productDesc",
+		a.prodcut_advert AS "prodcutAdvert",
+		a.create_time AS "createTime",
+		a.online_time AS "onlineTime",
+		a.offline_time AS "offlineTime",
+		a.update_time AS "updateTime",
+		a.is_delete AS "isDelete",
+		a.state AS "state",
+		a.state_remark AS "stateRemark",
+		a.audit_state AS "auditState",
+		a.audit_remark AS "auditRemark",
+		a.is_lock AS "isLock",
+		a.is_commend AS "isCommend",
+		a.freight AS "freight",
+		a.user_id AS "user.id",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3",
+		u19.name AS "user.name"
+	</sql>
+	
+	<sql id="ruiProductJoins">
+		LEFT JOIN sys_user u19 ON u19.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiProduct">
+		SELECT 
+			<include refid="ruiProductColumns"/>
+		FROM rui_product a
+		<include refid="ruiProductJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiProduct">
+		SELECT 
+			<include refid="ruiProductColumns"/>
+		FROM rui_product a
+		<include refid="ruiProductJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiProduct">
+		SELECT 
+			<include refid="ruiProductColumns"/>
+		FROM rui_product a
+		<include refid="ruiProductJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_product(
+			id,
+			category_id,
+			product_code,
+			product_name,
+			product_desc,
+			prodcut_advert,
+			create_time,
+			online_time,
+			offline_time,
+			update_time,
+			is_delete,
+			state,
+			state_remark,
+			audit_state,
+			audit_remark,
+			is_lock,
+			is_commend,
+			freight,
+			user_id,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{categoryId},
+			#{productCode},
+			#{productName},
+			#{productDesc},
+			#{prodcutAdvert},
+			#{createTime},
+			#{onlineTime},
+			#{offlineTime},
+			#{updateTime},
+			#{isDelete},
+			#{state},
+			#{stateRemark},
+			#{auditState},
+			#{auditRemark},
+			#{isLock},
+			#{isCommend},
+			#{freight},
+			#{user.id},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_product SET 	
+			category_id = #{categoryId},
+			product_code = #{productCode},
+			product_name = #{productName},
+			product_desc = #{productDesc},
+			prodcut_advert = #{prodcutAdvert},
+			create_time = #{createTime},
+			online_time = #{onlineTime},
+			offline_time = #{offlineTime},
+			update_time = #{updateTime},
+			is_delete = #{isDelete},
+			state = #{state},
+			state_remark = #{stateRemark},
+			audit_state = #{auditState},
+			audit_remark = #{auditRemark},
+			is_lock = #{isLock},
+			is_commend = #{isCommend},
+			freight = #{freight},
+			user_id = #{user.id},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_product
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

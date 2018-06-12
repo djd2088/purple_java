@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiOrderLogDao">
+    
+	<sql id="ruiOrderLogColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.log_msg AS "logMsg",
+		a.log_operater_id AS "logOperaterId",
+		a.create_time AS "createTime",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiOrderLogJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiOrderLog">
+		SELECT 
+			<include refid="ruiOrderLogColumns"/>
+		FROM rui_order_log a
+		<include refid="ruiOrderLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiOrderLog">
+		SELECT 
+			<include refid="ruiOrderLogColumns"/>
+		FROM rui_order_log a
+		<include refid="ruiOrderLogJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiOrderLog">
+		SELECT 
+			<include refid="ruiOrderLogColumns"/>
+		FROM rui_order_log a
+		<include refid="ruiOrderLogJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_order_log(
+			id,
+			order_id,
+			log_msg,
+			log_operater_id,
+			create_time,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{orderId},
+			#{logMsg},
+			#{logOperaterId},
+			#{createTime},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_order_log SET 	
+			order_id = #{orderId},
+			log_msg = #{logMsg},
+			log_operater_id = #{logOperaterId},
+			create_time = #{createTime},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_order_log
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

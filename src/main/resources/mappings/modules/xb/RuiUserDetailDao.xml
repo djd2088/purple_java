@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiUserDetailDao">
+    
+	<sql id="ruiUserDetailColumns">
+		a.id AS "id",
+		a.user_id AS "user.id",
+		a.real_name AS "realName",
+		a.birthday AS "birthday",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3",
+		u2.name AS "user.name"
+	</sql>
+	
+	<sql id="ruiUserDetailJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiUserDetail">
+		SELECT 
+			<include refid="ruiUserDetailColumns"/>
+		FROM rui_user_detail a
+		<include refid="ruiUserDetailJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiUserDetail">
+		SELECT 
+			<include refid="ruiUserDetailColumns"/>
+		FROM rui_user_detail a
+		<include refid="ruiUserDetailJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiUserDetail">
+		SELECT 
+			<include refid="ruiUserDetailColumns"/>
+		FROM rui_user_detail a
+		<include refid="ruiUserDetailJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_user_detail(
+			id,
+			user_id,
+			real_name,
+			birthday,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{user.id},
+			#{realName},
+			#{birthday},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_user_detail SET 	
+			user_id = #{user.id},
+			real_name = #{realName},
+			birthday = #{birthday},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_user_detail
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

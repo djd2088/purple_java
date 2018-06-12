@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiProductPropertyDao">
+    
+	<sql id="ruiProductPropertyColumns">
+		a.id AS "id",
+		a.product_id AS "productId",
+		a.json AS "json",
+		a.property_type AS "propertyType",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiProductPropertyJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiProductProperty">
+		SELECT 
+			<include refid="ruiProductPropertyColumns"/>
+		FROM rui_product_property a
+		<include refid="ruiProductPropertyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiProductProperty">
+		SELECT 
+			<include refid="ruiProductPropertyColumns"/>
+		FROM rui_product_property a
+		<include refid="ruiProductPropertyJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiProductProperty">
+		SELECT 
+			<include refid="ruiProductPropertyColumns"/>
+		FROM rui_product_property a
+		<include refid="ruiProductPropertyJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_product_property(
+			id,
+			product_id,
+			json,
+			property_type,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{productId},
+			#{json},
+			#{propertyType},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_product_property SET 	
+			product_id = #{productId},
+			json = #{json},
+			property_type = #{propertyType},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_product_property
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

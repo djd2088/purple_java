@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiOrderDao">
+    
+	<sql id="ruiOrderColumns">
+		a.id AS "id",
+		a.order_no AS "orderNo",
+		a.pay_no AS "payNo",
+		a.seller_id AS "sellerId",
+		a.seller_name AS "sellerName",
+		a.buyer_id AS "buyerId",
+		a.buyer_name AS "buyerName",
+		a.create_time AS "createTime",
+		a.pay_time AS "payTime",
+		a.finish_time AS "finishTime",
+		a.goods_amount AS "goodsAmount",
+		a.order_amount AS "orderAmount",
+		a.pd_amount AS "pdAmount",
+		a.freight AS "freight",
+		a.order_type AS "orderType",
+		a.chain_code AS "chainCode",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiOrderJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiOrder">
+		SELECT 
+			<include refid="ruiOrderColumns"/>
+		FROM rui_order a
+		<include refid="ruiOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiOrder">
+		SELECT 
+			<include refid="ruiOrderColumns"/>
+		FROM rui_order a
+		<include refid="ruiOrderJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiOrder">
+		SELECT 
+			<include refid="ruiOrderColumns"/>
+		FROM rui_order a
+		<include refid="ruiOrderJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_order(
+			id,
+			order_no,
+			pay_no,
+			seller_id,
+			seller_name,
+			buyer_id,
+			buyer_name,
+			create_time,
+			pay_time,
+			finish_time,
+			goods_amount,
+			order_amount,
+			pd_amount,
+			freight,
+			order_type,
+			chain_code,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{orderNo},
+			#{payNo},
+			#{sellerId},
+			#{sellerName},
+			#{buyerId},
+			#{buyerName},
+			#{createTime},
+			#{payTime},
+			#{finishTime},
+			#{goodsAmount},
+			#{orderAmount},
+			#{pdAmount},
+			#{freight},
+			#{orderType},
+			#{chainCode},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_order SET 	
+			order_no = #{orderNo},
+			pay_no = #{payNo},
+			seller_id = #{sellerId},
+			seller_name = #{sellerName},
+			buyer_id = #{buyerId},
+			buyer_name = #{buyerName},
+			create_time = #{createTime},
+			pay_time = #{payTime},
+			finish_time = #{finishTime},
+			goods_amount = #{goodsAmount},
+			order_amount = #{orderAmount},
+			pd_amount = #{pdAmount},
+			freight = #{freight},
+			order_type = #{orderType},
+			chain_code = #{chainCode},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_order
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

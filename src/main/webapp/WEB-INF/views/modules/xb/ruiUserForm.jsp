@@ -40,9 +40,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">pswd：</label>
+			<label class="control-label">password：</label>
 			<div class="controls">
-				<form:input path="pswd" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+				<form:input path="password" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -61,6 +61,84 @@
 			<label class="control-label">phone：</label>
 			<div class="controls">
 				<form:input path="phone" htmlEscape="false" maxlength="20" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">email：</label>
+			<div class="controls">
+				<form:input path="email" htmlEscape="false" maxlength="100" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">是否激活：</label>
+			<div class="controls">
+				<form:input path="isActive" htmlEscape="false" maxlength="4" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">is_lock：</label>
+			<div class="controls">
+				<form:input path="isLock" htmlEscape="false" maxlength="4" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">avatar：</label>
+			<div class="controls">
+				<form:input path="avatar" htmlEscape="false" maxlength="600" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">create_time：</label>
+			<div class="controls">
+				<input name="createTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${ruiUser.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">create_ip：</label>
+			<div class="controls">
+				<form:input path="createIp" htmlEscape="false" maxlength="50" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">last_login_time：</label>
+			<div class="controls">
+				<input name="lastLoginTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${ruiUser.lastLoginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">last_login_ip：</label>
+			<div class="controls">
+				<form:input path="lastLoginIp" htmlEscape="false" maxlength="50" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">update_time：</label>
+			<div class="controls">
+				<input name="updateTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
+					value="<fmt:formatDate value="${ruiUser.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">pre1：</label>
+			<div class="controls">
+				<form:input path="pre1" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">pre2：</label>
+			<div class="controls">
+				<form:input path="pre2" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">pre3：</label>
+			<div class="controls">
+				<form:input path="pre3" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiComplainDao">
+    
+	<sql id="ruiComplainColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.accuser_id AS "accuserId",
+		a.accuser_name AS "accuserName",
+		a.accused_id AS "accusedId",
+		a.accused_name AS "accusedName",
+		a.complain_id AS "complainId",
+		a.complain_pic1 AS "complainPic1",
+		a.complain_pic2 AS "complainPic2",
+		a.complain_pic3 AS "complainPic3",
+		a.create_time AS "createTime",
+		a.handle_time AS "handleTime",
+		a.handler_id AS "handlerId",
+		a.final_handle_message AS "finalHandleMessage",
+		a.final_handle_time AS "finalHandleTime",
+		a.final_handler_id AS "finalHandlerId",
+		a.state AS "state",
+		a.is_platform_handle AS "isPlatformHandle",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiComplainJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiComplain">
+		SELECT 
+			<include refid="ruiComplainColumns"/>
+		FROM rui_complain a
+		<include refid="ruiComplainJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiComplain">
+		SELECT 
+			<include refid="ruiComplainColumns"/>
+		FROM rui_complain a
+		<include refid="ruiComplainJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiComplain">
+		SELECT 
+			<include refid="ruiComplainColumns"/>
+		FROM rui_complain a
+		<include refid="ruiComplainJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_complain(
+			id,
+			order_id,
+			accuser_id,
+			accuser_name,
+			accused_id,
+			accused_name,
+			complain_id,
+			complain_pic1,
+			complain_pic2,
+			complain_pic3,
+			create_time,
+			handle_time,
+			handler_id,
+			final_handle_message,
+			final_handle_time,
+			final_handler_id,
+			state,
+			is_platform_handle,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{orderId},
+			#{accuserId},
+			#{accuserName},
+			#{accusedId},
+			#{accusedName},
+			#{complainId},
+			#{complainPic1},
+			#{complainPic2},
+			#{complainPic3},
+			#{createTime},
+			#{handleTime},
+			#{handlerId},
+			#{finalHandleMessage},
+			#{finalHandleTime},
+			#{finalHandlerId},
+			#{state},
+			#{isPlatformHandle},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_complain SET 	
+			order_id = #{orderId},
+			accuser_id = #{accuserId},
+			accuser_name = #{accuserName},
+			accused_id = #{accusedId},
+			accused_name = #{accusedName},
+			complain_id = #{complainId},
+			complain_pic1 = #{complainPic1},
+			complain_pic2 = #{complainPic2},
+			complain_pic3 = #{complainPic3},
+			create_time = #{createTime},
+			handle_time = #{handleTime},
+			handler_id = #{handlerId},
+			final_handle_message = #{finalHandleMessage},
+			final_handle_time = #{finalHandleTime},
+			final_handler_id = #{finalHandlerId},
+			state = #{state},
+			is_platform_handle = #{isPlatformHandle},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_complain
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiEvaluateGoodsDao">
+    
+	<sql id="ruiEvaluateGoodsColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.order_no AS "orderNo",
+		a.evaluate_content AS "evaluateContent",
+		a.evaluate_scores AS "evaluateScores",
+		a.is_anonymous AS "isAnonymous",
+		a.seller_id AS "sellerId",
+		a.user_id AS "user.id",
+		a.state AS "state",
+		a.evaluate_image AS "evaluateImage",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3",
+		u8.name AS "user.name"
+	</sql>
+	
+	<sql id="ruiEvaluateGoodsJoins">
+		LEFT JOIN sys_user u8 ON u8.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiEvaluateGoods">
+		SELECT 
+			<include refid="ruiEvaluateGoodsColumns"/>
+		FROM rui_evaluate_goods a
+		<include refid="ruiEvaluateGoodsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiEvaluateGoods">
+		SELECT 
+			<include refid="ruiEvaluateGoodsColumns"/>
+		FROM rui_evaluate_goods a
+		<include refid="ruiEvaluateGoodsJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiEvaluateGoods">
+		SELECT 
+			<include refid="ruiEvaluateGoodsColumns"/>
+		FROM rui_evaluate_goods a
+		<include refid="ruiEvaluateGoodsJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_evaluate_goods(
+			id,
+			order_id,
+			order_no,
+			evaluate_content,
+			evaluate_scores,
+			is_anonymous,
+			seller_id,
+			user_id,
+			state,
+			evaluate_image,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{orderId},
+			#{orderNo},
+			#{evaluateContent},
+			#{evaluateScores},
+			#{isAnonymous},
+			#{sellerId},
+			#{user.id},
+			#{state},
+			#{evaluateImage},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_evaluate_goods SET 	
+			order_id = #{orderId},
+			order_no = #{orderNo},
+			evaluate_content = #{evaluateContent},
+			evaluate_scores = #{evaluateScores},
+			is_anonymous = #{isAnonymous},
+			seller_id = #{sellerId},
+			user_id = #{user.id},
+			state = #{state},
+			evaluate_image = #{evaluateImage},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_evaluate_goods
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

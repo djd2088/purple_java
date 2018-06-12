@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiOrderItemDao">
+    
+	<sql id="ruiOrderItemColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.unitprice AS "unitprice",
+		a.number AS "number",
+		a.product_id AS "productId",
+		a.seller_id AS "sellerId",
+		a.buyer_id AS "buyerId",
+		a.is_appraise AS "isAppraise",
+		a.activityid AS "activityid",
+		a.activitytype AS "activitytype",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+		a.commis_rate AS "commisRate",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiOrderItemJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiOrderItem">
+		SELECT 
+			<include refid="ruiOrderItemColumns"/>
+		FROM rui_order_item a
+		<include refid="ruiOrderItemJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiOrderItem">
+		SELECT 
+			<include refid="ruiOrderItemColumns"/>
+		FROM rui_order_item a
+		<include refid="ruiOrderItemJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiOrderItem">
+		SELECT 
+			<include refid="ruiOrderItemColumns"/>
+		FROM rui_order_item a
+		<include refid="ruiOrderItemJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_order_item(
+			id,
+			order_id,
+			unitprice,
+			number,
+			product_id,
+			seller_id,
+			buyer_id,
+			is_appraise,
+			activityid,
+			activitytype,
+			create_time,
+			update_time,
+			commis_rate,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{orderId},
+			#{unitprice},
+			#{number},
+			#{productId},
+			#{sellerId},
+			#{buyerId},
+			#{isAppraise},
+			#{activityid},
+			#{activitytype},
+			#{createTime},
+			#{updateTime},
+			#{commisRate},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_order_item SET 	
+			order_id = #{orderId},
+			unitprice = #{unitprice},
+			number = #{number},
+			product_id = #{productId},
+			seller_id = #{sellerId},
+			buyer_id = #{buyerId},
+			is_appraise = #{isAppraise},
+			activityid = #{activityid},
+			activitytype = #{activitytype},
+			create_time = #{createTime},
+			update_time = #{updateTime},
+			commis_rate = #{commisRate},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_order_item
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
