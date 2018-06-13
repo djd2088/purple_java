@@ -40,7 +40,22 @@
 		FROM rui_user a
 		<include refid="ruiUserJoins"/>
 		<where>
-			
+			<if test="username != null and username != ''">
+				a.username = #{username}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND a.phone = #{phone}
+			</if>
+			<if test="isLock != null and isLock != ''">
+				AND a.is_lock = #{isLock}
+			</if>
+            <if test="createTime != null">
+                AND a.create_time >= #{createTime}
+            </if>
+            <if test="endTime != null">
+                AND a.create_time &lt;= #{endTime}
+            </if>
+
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -70,7 +85,6 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_user(
-			id,
 			username,
 			password,
 			sex,
@@ -89,7 +103,6 @@
 			pre2,
 			pre3
 		) VALUES (
-			#{id},
 			#{username},
 			#{password},
 			#{sex},
@@ -99,11 +112,11 @@
 			#{isActive},
 			#{isLock},
 			#{avatar},
-			#{createTime},
+			now(),
 			#{createIp},
-			#{lastLoginTime},
+			now(),
 			#{lastLoginIp},
-			#{updateTime},
+			now(),
 			#{pre1},
 			#{pre2},
 			#{pre3}
@@ -125,7 +138,7 @@
 			create_ip = #{createIp},
 			last_login_time = #{lastLoginTime},
 			last_login_ip = #{lastLoginIp},
-			update_time = #{updateTime},
+			update_time = now(),
 			pre1 = #{pre1},
 			pre2 = #{pre2},
 			pre3 = #{pre3}

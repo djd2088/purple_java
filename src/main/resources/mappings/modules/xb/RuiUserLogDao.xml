@@ -32,10 +32,23 @@
 	<select id="findList" resultType="RuiUserLog">
 		SELECT 
 			<include refid="ruiUserLogColumns"/>
+        ,b.username,b.phone
 		FROM rui_user_log a
 		<include refid="ruiUserLogJoins"/>
+		LEFT JOIN rui_user b ON a.user_id = b.id
 		<where>
-			
+			<if test="username != null and username !=''">
+				b.username = #{username}
+			</if>
+			<if test="phone != null and phone != ''">
+				AND b.phone LIKE '%${phone}%'
+			</if>
+			<if test="operateTime != null">
+				AND a.operate_time >= #{operateTime}
+			</if>
+			<if test="endTime != null">
+				AND a.operate_time &lt;= #{endTime}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

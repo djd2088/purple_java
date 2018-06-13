@@ -19,7 +19,7 @@ public class RuiUser extends DataEntity<RuiUser> {
 	private static final long serialVersionUID = 1L;
 	private String username;		// username
 	private String password;		// password
-	private String sex;		// sex
+	private String sex;		// sex 1男 2女 0保密
 	private String nickname;		// nickname
 	private String phone;		// phone
 	private String email;		// email
@@ -34,7 +34,8 @@ public class RuiUser extends DataEntity<RuiUser> {
 	private String pre1;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
-	
+
+	private Date endTime;
 	public RuiUser() {
 		super();
 	}
@@ -195,5 +196,12 @@ public class RuiUser extends DataEntity<RuiUser> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 }

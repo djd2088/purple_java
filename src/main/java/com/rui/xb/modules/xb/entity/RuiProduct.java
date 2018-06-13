@@ -6,7 +6,6 @@ package com.rui.xb.modules.xb.entity;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.validator.constraints.Length(min=0, max=4, message="是否上架;
 import com.rui.xb.modules.sys.entity.User;
 
 import com.rui.xb.common.persistence.DataEntity;

@@ -68,7 +68,7 @@ public class RuiUserController extends BaseController {
 			return form(ruiUser, model);
 		}
 		ruiUserService.save(ruiUser);
-		addMessage(redirectAttributes, "保存单表成功");
+		addMessage(redirectAttributes, "保存成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiUser/?repage";
 	}
 	
@@ -76,7 +76,7 @@ public class RuiUserController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(RuiUser ruiUser, RedirectAttributes redirectAttributes) {
 		ruiUserService.delete(ruiUser);
-		addMessage(redirectAttributes, "删除单表成功");
+		addMessage(redirectAttributes, "删除成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiUser/?repage";
 	}
 

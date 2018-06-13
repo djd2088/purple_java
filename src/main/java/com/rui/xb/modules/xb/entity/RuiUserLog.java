@@ -28,6 +28,10 @@ public class RuiUserLog extends DataEntity<RuiUserLog> {
 	private String pre1;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
+
+	private Date endTime;
+	private String username;
+	private String phone;
 	
 	public RuiUserLog() {
 		super();
@@ -124,5 +128,28 @@ public class RuiUserLog extends DataEntity<RuiUserLog> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }
