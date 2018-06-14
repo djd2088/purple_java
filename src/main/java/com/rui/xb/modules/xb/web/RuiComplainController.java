@@ -49,7 +49,7 @@ public class RuiComplainController extends BaseController {
 	@RequiresPermissions("xb:ruiComplain:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(RuiComplain ruiComplain, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<RuiComplain> page = ruiComplainService.findPage(new Page<RuiComplain>(request, response), ruiComplain); 
+		Page<RuiComplain> page = ruiComplainService.findPage(new Page<RuiComplain>(request, response), ruiComplain);
 		model.addAttribute("page", page);
 		return "modules/xb/ruiComplainList";
 	}

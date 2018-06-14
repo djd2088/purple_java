@@ -68,7 +68,7 @@ public class RuiBugAdviceController extends BaseController {
 			return form(ruiBugAdvice, model);
 		}
 		ruiBugAdviceService.save(ruiBugAdvice);
-		addMessage(redirectAttributes, "保存单表成功");
+		addMessage(redirectAttributes, "保存成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiBugAdvice/?repage";
 	}
 	
@@ -76,7 +76,19 @@ public class RuiBugAdviceController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(RuiBugAdvice ruiBugAdvice, RedirectAttributes redirectAttributes) {
 		ruiBugAdviceService.delete(ruiBugAdvice);
-		addMessage(redirectAttributes, "删除单表成功");
+		addMessage(redirectAttributes, "删除成功");
+		return "redirect:"+Global.getAdminPath()+"/xb/ruiBugAdvice/?repage";
+	}
+
+	@RequiresPermissions("xb:ruiBugAdvice:edit")
+	@RequestMapping(value = "deal")
+	public String deal(RuiBugAdvice ruiBugAdvice, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, ruiBugAdvice)){
+			return form(ruiBugAdvice, model);
+		}
+		ruiBugAdvice.setIsDeal("1");
+		ruiBugAdviceService.save(ruiBugAdvice);
+		addMessage(redirectAttributes, "处理成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiBugAdvice/?repage";
 	}
 

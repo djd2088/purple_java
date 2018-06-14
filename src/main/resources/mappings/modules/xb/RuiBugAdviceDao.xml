@@ -8,7 +8,7 @@
 		a.user_id AS "user.id",
 		a.create_time AS "createTime",
 		a.is_deal AS "isDeal",
-		a.pre1 AS "pre1",
+		a.deal_time AS "dealTime",
 		a.pre2 AS "pre2",
 		a.pre3 AS "pre3",
 		u3.name AS "user.name"
@@ -29,10 +29,26 @@
 	<select id="findList" resultType="RuiBugAdvice">
 		SELECT 
 			<include refid="ruiBugAdviceColumns"/>
+		,b.username,b.phone
 		FROM rui_bug_advice a
 		<include refid="ruiBugAdviceJoins"/>
+		LEFT JOIN rui_user b ON a.user_id = b.id
 		<where>
-			
+			<!--<if test="username != null and username !=''">-->
+				<!--b.username = #{username}-->
+			<!--</if>-->
+			<!--<if test="phone != null and phone != ''">-->
+				<!--AND b.phone LIKE '%${phone}%'-->
+			<!--</if>-->
+            <if test="isDeal != null and isDeal != ''">
+                a.is_deal = #{isDeal}
+            </if>
+			<if test="createTime != null">
+				AND a.create_time >= #{createTime}
+			</if>
+			<if test="endTime != null">
+				AND a.create_time &lt;= #{endTime}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -67,7 +83,7 @@
 			user_id,
 			create_time,
 			is_deal,
-			pre1,
+			deal_time,
 			pre2,
 			pre3
 		) VALUES (
@@ -76,7 +92,7 @@
 			#{user.id},
 			#{createTime},
 			#{isDeal},
-			#{pre1},
+			#{dealTime},
 			#{pre2},
 			#{pre3}
 		)
@@ -88,7 +104,7 @@
 			user_id = #{user.id},
 			create_time = #{createTime},
 			is_deal = #{isDeal},
-			pre1 = #{pre1},
+			deal_time = now(),
 			pre2 = #{pre2},
 			pre3 = #{pre3}
 		WHERE id = #{id}

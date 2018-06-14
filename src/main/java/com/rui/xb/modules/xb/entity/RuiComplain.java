@@ -34,9 +34,12 @@ public class RuiComplain extends DataEntity<RuiComplain> {
 	private String finalHandlerId;		// final_handler_id
 	private String state;		// 投诉状态(10-新投诉/20-投诉通过转给被投诉人/30-被投诉人已申诉/40-提交仲裁/99-已关闭)
 	private String isPlatformHandle;		// 是否平台处理
-	private String pre1;		// pre1
-	private String pre2;		// pre2
+	private String accuserPhone;		// 原告电话
+	private String accusedPhone;		// 被告电话
 	private String pre3;		// pre3
+
+	private Date endTime;
+	private String orderNo;
 	
 	public RuiComplain() {
 		super();
@@ -198,25 +201,23 @@ public class RuiComplain extends DataEntity<RuiComplain> {
 	public void setIsPlatformHandle(String isPlatformHandle) {
 		this.isPlatformHandle = isPlatformHandle;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getAccuserPhone() {
+		return accuserPhone;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
-	}
-	
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public void setAccuserPhone(String accuserPhone) {
+		this.accuserPhone = accuserPhone;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
+	public String getAccusedPhone() {
+		return accusedPhone;
 	}
-	
+
+	public void setAccusedPhone(String accusedPhone) {
+		this.accusedPhone = accusedPhone;
+	}
+
 	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
 	public String getPre3() {
 		return pre3;
@@ -225,5 +226,20 @@ public class RuiComplain extends DataEntity<RuiComplain> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
 }

@@ -21,8 +21,8 @@
 		a.final_handler_id AS "finalHandlerId",
 		a.state AS "state",
 		a.is_platform_handle AS "isPlatformHandle",
-		a.pre1 AS "pre1",
-		a.pre2 AS "pre2",
+		a.accuser_phone AS "accuserPhone",
+		a.accused_phone AS "accusedPhone",
 		a.pre3 AS "pre3"
 	</sql>
 	
@@ -32,18 +32,30 @@
 	<select id="get" resultType="RuiComplain">
 		SELECT 
 			<include refid="ruiComplainColumns"/>
+		,b.order_no
 		FROM rui_complain a
 		<include refid="ruiComplainJoins"/>
+		LEFT JOIN rui_order b ON a.order_id = b.id
 		WHERE a.id = #{id}
 	</select>
 	
 	<select id="findList" resultType="RuiComplain">
 		SELECT 
 			<include refid="ruiComplainColumns"/>
+		,b.order_no
 		FROM rui_complain a
 		<include refid="ruiComplainJoins"/>
+		LEFT JOIN rui_order b ON a.order_id = b.id
 		<where>
-			
+			<if test="state != null and state != ''">
+				a.state = #{state}
+			</if>
+			<if test="createTime != null and createTime != ''">
+				AND a.create_time >= #{createTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				AND a.create_time &lt;= #{endTime}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -91,8 +103,8 @@
 			final_handler_id,
 			state,
 			is_platform_handle,
-			pre1,
-			pre2,
+			accuser_phone,
+			accused_phone,
 			pre3
 		) VALUES (
 			#{id},
@@ -113,8 +125,8 @@
 			#{finalHandlerId},
 			#{state},
 			#{isPlatformHandle},
-			#{pre1},
-			#{pre2},
+			#{accuserPhone},
+			#{accusedPhone},
 			#{pre3}
 		)
 	</insert>
@@ -138,8 +150,8 @@
 			final_handler_id = #{finalHandlerId},
 			state = #{state},
 			is_platform_handle = #{isPlatformHandle},
-			pre1 = #{pre1},
-			pre2 = #{pre2},
+			accuser_phone = #{accuserPhone},
+			accused_phone = #{accusedPhone},
 			pre3 = #{pre3}
 		WHERE id = #{id}
 	</update>
