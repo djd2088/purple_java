@@ -43,10 +43,30 @@
 	<select id="findList" resultType="RuiProduct">
 		SELECT 
 			<include refid="ruiProductColumns"/>
+        ,b.username,b.phone,cc.name AS categoryName
 		FROM rui_product a
 		<include refid="ruiProductJoins"/>
+		LEFT JOIN rui_user b ON a.user_id = b.id
+        LEFT JOIN rui_product_category cc ON a.category_id = cc.id
 		<where>
-			
+			<!--<if test="categoryId != null and categoryId != ''">-->
+				<!--a.category_id = #{categoryId}-->
+			<!--</if>-->
+			<if test="state != null and state != ''">
+				a.state = #{state}
+			</if>
+			<if test="auditState != null and auditState != ''">
+				AND a.audit_state = #{auditState}
+			</if>
+			<if test="isLock != null and isLock != ''">
+				AND a.is_lock = #{isLock}
+			</if>
+			<if test="productName != null and productName != ''">
+				AND a.product_name LIKE concat('%',#{productName},'%')
+			</if>
+			<if test="owner != null and owner != ''">
+				AND (b.username = #{owner} OR b.phone = #{owner})
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

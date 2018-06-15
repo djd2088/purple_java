@@ -7,6 +7,8 @@ import com.rui.xb.common.persistence.CrudDao;
 import com.rui.xb.common.persistence.annotation.MyBatisDao;
 import com.rui.xb.modules.xb.entity.RuiProductCategory;
 
+import java.util.List;
+
 /**
  * 单表生成DAO接口
  * @author ThinkGem
@@ -14,5 +16,7 @@ import com.rui.xb.modules.xb.entity.RuiProductCategory;
  */
 @MyBatisDao
 public interface RuiProductCategoryDao extends CrudDao<RuiProductCategory> {
+
+    List<RuiProductCategory> findParentByCategoryLevel(String level);
 	
 }

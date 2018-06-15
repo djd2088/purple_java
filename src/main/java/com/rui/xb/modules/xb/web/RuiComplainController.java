@@ -68,7 +68,7 @@ public class RuiComplainController extends BaseController {
 			return form(ruiComplain, model);
 		}
 		ruiComplainService.save(ruiComplain);
-		addMessage(redirectAttributes, "保存单表成功");
+		addMessage(redirectAttributes, "保存成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiComplain/?repage";
 	}
 	
@@ -76,7 +76,7 @@ public class RuiComplainController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(RuiComplain ruiComplain, RedirectAttributes redirectAttributes) {
 		ruiComplainService.delete(ruiComplain);
-		addMessage(redirectAttributes, "删除单表成功");
+		addMessage(redirectAttributes, "删除成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiComplain/?repage";
 	}
 

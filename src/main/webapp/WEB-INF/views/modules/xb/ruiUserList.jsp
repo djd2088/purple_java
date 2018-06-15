@@ -86,12 +86,16 @@
         <tr>
             <td style="text-align: center;">${ruiUser.id}</td>
             <td style="text-align: center;">${ruiUser.username}</td>
-            <td style="text-align: center;">${ruiUser.sex}</td>
+            <%--<td style="text-align: center;"><c:if test="${ruiUser.sex==1}">男</c:if>--%>
+                <%--<c:if test="${ruiUser.sex==2}">女</c:if>--%>
+                <%--<c:if test="${ruiUser.sex==0}">保密</c:if>--%>
+            <%--</td>--%>
+            <td style="text-align: center;">${ruiUser.sex==1?'男':'女'}</td>
             <td style="text-align: center;">${ruiUser.nickname}</td>
             <td style="text-align: center;">${ruiUser.phone}</td>
             <td style="text-align: center;">${ruiUser.email}</td>
                 <%--<td style="text-align: center;">${ruiUser.isActive}</td>--%>
-            <td style="text-align: center;">${ruiUser.isLock}</td>
+            <td style="text-align: center;">${ruiUser.isLock==1?'是':'否'}</td>
             <td style="text-align: center;"><fmt:formatDate value="${ruiUser.createTime}"
                                                             pattern="yyyy-MM-dd hh:mm:ss"/></td>
                 <%--<td>${ruiUser.createIp}</td>--%>

@@ -6,15 +6,15 @@
 		a.id AS "id",
 		a.name AS "name",
 		a.description AS "description",
-		a.parent_id AS "parent.id",
+		a.parent_id AS "parentId",
 		a.is_delete AS "isDelete",
 		a.create_time AS "createTime",
 		a.update_time AS "updateTime",
-		a.pre1 AS "pre1",
+		a.category_level AS "categoryLevel",
 		a.pre2 AS "pre2",
 		a.pre3 AS "pre3"
 	</sql>
-	
+
 	<sql id="ruiProductCategoryJoins">
 	</sql>
     
@@ -29,15 +29,17 @@
 	<select id="findList" resultType="RuiProductCategory">
 		SELECT 
 			<include refid="ruiProductCategoryColumns"/>
+		,b.name AS "parentName"
 		FROM rui_product_category a
 		<include refid="ruiProductCategoryJoins"/>
+		LEFT JOIN rui_product_category b ON  a.parent_id = b.id
 		<where>
-			
-			<if test="name != null and name != ''">
-				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			<if test="categoryLevel != null and categoryLevel != ''">
+				a.category_level = #{categoryLevel}
+			</if>
+
+			<if test="parentId != null and parentId != ''">
+				AND a.parent_id = #{parentId}
 			</if>
 		</where>
 		<choose>
@@ -52,8 +54,10 @@
 	<select id="findAllList" resultType="RuiProductCategory">
 		SELECT 
 			<include refid="ruiProductCategoryColumns"/>
+		,b.name AS "parentName"
 		FROM rui_product_category a
 		<include refid="ruiProductCategoryJoins"/>
+		LEFT JOIN rui_product_category b ON  a.parent_id = b.id
 		<where>
 			
 		</where>		
@@ -68,25 +72,23 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_product_category(
-			id,
 			name,
 			description,
 			parent_id,
 			is_delete,
 			create_time,
 			update_time,
-			pre1,
+			category_level,
 			pre2,
 			pre3
 		) VALUES (
-			#{id},
 			#{name},
 			#{description},
-			#{parent.id},
+			#{parentId},
 			#{isDelete},
-			#{createTime},
-			#{updateTime},
-			#{pre1},
+			now(),
+			now(),
+			#{categoryLevel},
 			#{pre2},
 			#{pre3}
 		)
@@ -96,11 +98,11 @@
 		UPDATE rui_product_category SET 	
 			name = #{name},
 			description = #{description},
-			parent_id = #{parent.id},
+			parent_id = #{parentId},
 			is_delete = #{isDelete},
 			create_time = #{createTime},
-			update_time = #{updateTime},
-			pre1 = #{pre1},
+			update_time = now(),
+			category_level = #{categoryLevel},
 			pre2 = #{pre2},
 			pre3 = #{pre3}
 		WHERE id = #{id}
@@ -110,5 +112,17 @@
 		DELETE FROM rui_product_category
 		WHERE id = #{id}
 	</update>
-	
+
+
+	<select id="findParentByCategoryLevel" resultType="RuiProductCategory">
+		SELECT DISTINCT
+		<include refid="ruiProductCategoryColumns"/>
+		FROM rui_product_category a
+		<include refid="ruiProductCategoryJoins"/>
+		LEFT JOIN rui_product_category b ON a.id = b.parent_id
+		<where>
+			 b.category_level = #{param}
+		</where>
+	</select>
+
 </mapper>

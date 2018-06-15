@@ -39,7 +39,13 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	private String pre1;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
-	
+
+
+	//model字段
+	private String owner;
+	private String categoryName;
+	private String username;
+	private String phone;
 	public RuiProduct() {
 		super();
 	}
@@ -234,5 +240,36 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

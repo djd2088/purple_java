@@ -20,13 +20,17 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 	private static final long serialVersionUID = 1L;
 	private String name;		// name
 	private String description;		// description
-	private RuiProductCategory parent;		// parent_id
+//	private RuiProductCategory parent;		// parent_id
+	private String parentId;
 	private String isDelete;		// is_delete
 	private Date createTime;		// create_time
 	private Date updateTime;		// update_time
-	private String pre1;		// pre1
+	private String categoryLevel;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
+
+
+	private String parentName;
 	
 	public RuiProductCategory() {
 		super();
@@ -53,16 +57,25 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@JsonBackReference
-	public RuiProductCategory getParent() {
-		return parent;
+
+//	@JsonBackReference
+//	public RuiProductCategory getParent() {
+//		return parent;
+//	}
+//
+//	public void setParent(RuiProductCategory parent) {
+//		this.parent = parent;
+//	}
+
+
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setParent(RuiProductCategory parent) {
-		this.parent = parent;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
-	
+
 	@Length(min=0, max=4, message="is_delete长度必须介于 0 和 4 之间")
 	public String getIsDelete() {
 		return isDelete;
@@ -89,16 +102,15 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getCategoryLevel() {
+		return categoryLevel;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
+	public void setCategoryLevel(String categoryLevel) {
+		this.categoryLevel = categoryLevel;
 	}
-	
+
 	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
 	public String getPre2() {
 		return pre2;
@@ -116,5 +128,13 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
 }

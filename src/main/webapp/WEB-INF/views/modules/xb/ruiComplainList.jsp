@@ -71,8 +71,12 @@
 				<td style="text-align: center;">${ruiComplain.accusedPhone}</td>
 				<td style="text-align: center;"><fmt:formatDate value="${ruiComplain.createTime}" pattern="yyyy-MM-dd hh:mm:ss"/>
 				<td style="text-align: center;"><fmt:formatDate value="${ruiComplain.finalHandleTime}" pattern="yyyy-MM-dd hh:mm:ss"/>
-				<td style="text-align: center;">${ruiComplain.state}</td>
-				<td style="text-align: center;">${ruiComplain.isPlatformHandle}</td>
+				<td style="text-align: center;"><c:if test="${ruiComplain.state==10}">新投诉</c:if>
+				<c:if test="${ruiComplain.state==20}">已转达被告人</c:if>
+				<c:if test="${ruiComplain.state==30}">被告人申述</c:if>
+				<c:if test="${ruiComplain.state==40}">平台仲裁</c:if>
+				<c:if test="${ruiComplain.state==99}">已解决</c:if></td>
+				<td style="text-align: center;">${ruiComplain.isPlatformHandle==1?'是':'否'}</td>
 				<shiro:hasPermission name="xb:ruiComplain:edit"><td style="text-align: center;">
     				<a href="${ctx}/xb/ruiComplain/form?id=${ruiComplain.id}">处理</a>
 					<%--<a href="${ctx}/xb/ruiComplain/delete?id=${ruiComplain.id}" onclick="return confirmx('确认要删除该单表吗？', this.href)">删除</a>--%>

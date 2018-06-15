@@ -43,5 +43,8 @@ public class RuiProductCategoryService extends CrudService<RuiProductCategoryDao
 	public void delete(RuiProductCategory ruiProductCategory) {
 		super.delete(ruiProductCategory);
 	}
-	
+
+	public List<RuiProductCategory> findParentByCategoryLevel(String level){
+		return dao.findParentByCategoryLevel(level);
+	}
 }

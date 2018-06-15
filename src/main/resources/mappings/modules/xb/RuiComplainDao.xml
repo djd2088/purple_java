@@ -146,7 +146,7 @@
 			handle_time = #{handleTime},
 			handler_id = #{handlerId},
 			final_handle_message = #{finalHandleMessage},
-			final_handle_time = #{finalHandleTime},
+			final_handle_time = now(),
 			final_handler_id = #{finalHandlerId},
 			state = #{state},
 			is_platform_handle = #{isPlatformHandle},

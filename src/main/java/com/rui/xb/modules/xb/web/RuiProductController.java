@@ -68,7 +68,7 @@ public class RuiProductController extends BaseController {
 			return form(ruiProduct, model);
 		}
 		ruiProductService.save(ruiProduct);
-		addMessage(redirectAttributes, "保存单表成功");
+		addMessage(redirectAttributes, "保存成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiProduct/?repage";
 	}
 	
@@ -76,7 +76,7 @@ public class RuiProductController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(RuiProduct ruiProduct, RedirectAttributes redirectAttributes) {
 		ruiProductService.delete(ruiProduct);
-		addMessage(redirectAttributes, "删除单表成功");
+		addMessage(redirectAttributes, "删除成功");
 		return "redirect:"+Global.getAdminPath()+"/xb/ruiProduct/?repage";
 	}
 

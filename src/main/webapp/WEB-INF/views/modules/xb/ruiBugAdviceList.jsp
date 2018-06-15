@@ -64,7 +64,7 @@
                 <td style="text-align: center;">${ruiBugAdvice.username}</td>
                 <td style="text-align: center;">${ruiBugAdvice.phone}</td>
                 <td style="text-align: center;">${ruiBugAdvice.content}</td>
-                <td style="text-align: center;">${ruiBugAdvice.isDeal}</td>
+                <td style="text-align: center;">${ruiBugAdvice.isDeal==1?'是':'否'}</td>
 				<td style="text-align: center;"><fmt:formatDate value="${ruiBugAdvice.createTime}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 				<td style="text-align: center;"><fmt:formatDate value="${ruiBugAdvice.dealTime}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
 				<shiro:hasPermission name="xb:ruiBugAdvice:edit"><td style="text-align: center;">
