@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>单表管理</title>
+	<title>意见管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -18,8 +18,9 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/xb/ruiBugAdvice/">单表列表</a></li>
-		<shiro:hasPermission name="xb:ruiBugAdvice:edit"><li><a href="${ctx}/xb/ruiBugAdvice/form">单表添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/xb/ruiBugAdvice/">意见列表</a></li>
+		<shiro:hasPermission name="xb:ruiBugAdvice:edit"><li><a href="${ctx}/xb/ruiBugAdvice/form">意见添加</a></li
+		></shiro:hasPermission>
 	</ul>
 	<form:form id="searchForm" modelAttribute="ruiBugAdvice" action="${ctx}/xb/ruiBugAdvice/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

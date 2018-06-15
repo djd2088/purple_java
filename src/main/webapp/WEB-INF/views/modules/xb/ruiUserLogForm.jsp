@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>单表管理</title>
+	<title>用户操作管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,8 +27,9 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/xb/ruiUserLog/">单表列表</a></li>
-		<li class="active"><a href="${ctx}/xb/ruiUserLog/form?id=${ruiUserLog.id}">单表<shiro:hasPermission name="xb:ruiUserLog:edit">${not empty ruiUserLog.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="xb:ruiUserLog:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/xb/ruiUserLog/">用户操作列表</a></li>
+		<li class="active"><a href="${ctx}/xb/ruiUserLog/form?id=${ruiUserLog.id}">用户操作<shiro:hasPermission
+				name="xb:ruiUserLog:edit">${not empty ruiUserLog.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="xb:ruiUserLog:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="ruiUserLog" action="${ctx}/xb/ruiUserLog/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
