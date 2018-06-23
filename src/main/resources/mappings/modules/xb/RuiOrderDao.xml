@@ -19,7 +19,7 @@
 		a.freight AS "freight",
 		a.order_type AS "orderType",
 		a.chain_code AS "chainCode",
-		a.pre1 AS "pre1",
+		a.state AS "state",
 		a.pre2 AS "pre2",
 		a.pre3 AS "pre3"
 	</sql>
@@ -41,7 +41,18 @@
 		FROM rui_order a
 		<include refid="ruiOrderJoins"/>
 		<where>
-			
+			<if test="orderNo != null and orderNo != ''">
+				a.order_no = #{orderNo}
+			</if>
+			<if test="state != null and state !=''">
+				AND a.state = #{state}
+			</if>
+			<if test="createTime != null">
+				AND a.create_time >= #{createTime}
+			</if>
+			<if test="endTime != null">
+				AND a.create_time &lt;= #{endTime}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -87,7 +98,7 @@
 			freight,
 			order_type,
 			chain_code,
-			pre1,
+			state,
 			pre2,
 			pre3
 		) VALUES (
@@ -107,7 +118,7 @@
 			#{freight},
 			#{orderType},
 			#{chainCode},
-			#{pre1},
+			#{state},
 			#{pre2},
 			#{pre3}
 		)
@@ -130,7 +141,7 @@
 			freight = #{freight},
 			order_type = #{orderType},
 			chain_code = #{chainCode},
-			pre1 = #{pre1},
+			state = #{state},
 			pre2 = #{pre2},
 			pre3 = #{pre3}
 		WHERE id = #{id}

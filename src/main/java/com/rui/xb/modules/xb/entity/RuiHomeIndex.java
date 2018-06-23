@@ -3,11 +3,15 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.rui.xb.common.persistence.DataEntity;
+import org.springframework.aop.target.LazyInitTargetSource;
 
 /**
  * 单表生成Entity
@@ -17,13 +21,17 @@ import com.rui.xb.common.persistence.DataEntity;
 public class RuiHomeIndex extends DataEntity<RuiHomeIndex> {
 	
 	private static final long serialVersionUID = 1L;
+	@Expose
 	private String webName;		// web_name
 	private Date createTime;		// create_time
 	private String isShow;		// is_show
 	private String sort;		// sort
-	private String pre1;		// pre1
-	private String pre2;		// pre2
+	@Expose
+	private String content;		// pre1
+	private String isDelete;		// pre2
 	private String pre3;		// pre3
+
+	private List<RuiHomeDetail> details;
 	
 	public RuiHomeIndex() {
 		super();
@@ -68,25 +76,23 @@ public class RuiHomeIndex extends DataEntity<RuiHomeIndex> {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getContent() {
+		return content;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
-	}
-	
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
+	public String getIsDelete() {
+		return isDelete;
 	}
-	
+
+	public void setIsDelete(String isDelete) {
+		this.isDelete = isDelete;
+	}
+
 	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
 	public String getPre3() {
 		return pre3;
@@ -95,5 +101,18 @@ public class RuiHomeIndex extends DataEntity<RuiHomeIndex> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+
+	public List<RuiHomeDetail> getDetails() {
+		return details;
+	}
+
+	public void setDetails(List<RuiHomeDetail> details) {
+		this.details = details;
+	}
+
+	public enum TYPE{
+		BANNER,
+		CHANNEL
+	}
 }

@@ -5,6 +5,8 @@ package com.rui.xb.modules.xb.service;
 
 import java.util.List;
 
+import com.rui.xb.modules.xb.entity.RuiHomeDetail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,11 @@ import com.rui.xb.modules.xb.dao.RuiHomeIndexDao;
 @Service
 @Transactional(readOnly = true)
 public class RuiHomeIndexService extends CrudService<RuiHomeIndexDao, RuiHomeIndex> {
+
+
+	@Autowired
+	RuiHomeDetailService homeDetailService;
+
 
 	public RuiHomeIndex get(String id) {
 		return super.get(id);
@@ -43,5 +50,18 @@ public class RuiHomeIndexService extends CrudService<RuiHomeIndexDao, RuiHomeInd
 	public void delete(RuiHomeIndex ruiHomeIndex) {
 		super.delete(ruiHomeIndex);
 	}
-	
+
+	public RuiHomeIndex getByType(String type){
+		RuiHomeIndex homeIndex = new RuiHomeIndex();
+		homeIndex.setWebName(type);
+		return dao.getByType(homeIndex);
+		//buildHomeIndex(homeIndex);
+	}
+
+	private void buildHomeIndex(RuiHomeIndex homeIndex) {
+		RuiHomeDetail detail = new RuiHomeDetail();
+		detail.setHomeId(homeIndex.getId());
+		homeIndex.setDetails(homeDetailService.findList(detail));
+	}
+
 }

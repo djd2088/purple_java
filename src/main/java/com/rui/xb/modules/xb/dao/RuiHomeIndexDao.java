@@ -14,5 +14,6 @@ import com.rui.xb.modules.xb.entity.RuiHomeIndex;
  */
 @MyBatisDao
 public interface RuiHomeIndexDao extends CrudDao<RuiHomeIndex> {
-	
+
+    RuiHomeIndex getByType(RuiHomeIndex ruiHomeIndex);
 }

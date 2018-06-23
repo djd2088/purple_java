@@ -21,10 +21,12 @@ public class RuiOrderLog extends DataEntity<RuiOrderLog> {
 	private String logMsg;		// log_msg
 	private String logOperaterId;		// log_operater_id
 	private Date createTime;		// create_time
-	private String pre1;		// pre1
+	private String orderNo;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
-	
+
+	private Date endTime;
+
 	public RuiOrderLog() {
 		super();
 	}
@@ -68,16 +70,15 @@ public class RuiOrderLog extends DataEntity<RuiOrderLog> {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getOrderNo() {
+		return orderNo;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
-	
+
 	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
 	public String getPre2() {
 		return pre2;
@@ -95,5 +96,12 @@ public class RuiOrderLog extends DataEntity<RuiOrderLog> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 }

@@ -19,8 +19,8 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/xb/ruiBugAdvice/">意见列表</a></li>
-		<shiro:hasPermission name="xb:ruiBugAdvice:edit"><li><a href="${ctx}/xb/ruiBugAdvice/form">意见添加</a></li
-		></shiro:hasPermission>
+		<%--<shiro:hasPermission name="xb:ruiBugAdvice:edit"><li><a href="${ctx}/xb/ruiBugAdvice/form">意见添加</a></li--%>
+		<%--></shiro:hasPermission>--%>
 	</ul>
 	<form:form id="searchForm" modelAttribute="ruiBugAdvice" action="${ctx}/xb/ruiBugAdvice/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>

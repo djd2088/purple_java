@@ -8,7 +8,7 @@
 		a.log_msg AS "logMsg",
 		a.log_operater_id AS "logOperaterId",
 		a.create_time AS "createTime",
-		a.pre1 AS "pre1",
+		a.order_no AS "orderNo",
 		a.pre2 AS "pre2",
 		a.pre3 AS "pre3"
 	</sql>
@@ -30,7 +30,15 @@
 		FROM rui_order_log a
 		<include refid="ruiOrderLogJoins"/>
 		<where>
-			
+			<if test="orderNo != null and orderNo != ''">
+				a.order_no = #{orderNo}
+			</if>
+			<if test="createTime != null">
+				AND a.create_time >= #{createTime}
+			</if>
+			<if test="endTime != null">
+				AND a.create_time &lt;= #{endTime}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -65,7 +73,7 @@
 			log_msg,
 			log_operater_id,
 			create_time,
-			pre1,
+			order_no,
 			pre2,
 			pre3
 		) VALUES (
@@ -74,7 +82,7 @@
 			#{logMsg},
 			#{logOperaterId},
 			#{createTime},
-			#{pre1},
+			#{orderNo},
 			#{pre2},
 			#{pre3}
 		)
@@ -86,7 +94,7 @@
 			log_msg = #{logMsg},
 			log_operater_id = #{logOperaterId},
 			create_time = #{createTime},
-			pre1 = #{pre1},
+			order_no = #{orderNo},
 			pre2 = #{pre2},
 			pre3 = #{pre3}
 		WHERE id = #{id}

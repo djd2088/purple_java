@@ -32,10 +32,12 @@ public class RuiOrder extends DataEntity<RuiOrder> {
 	private String freight;		// 运费
 	private String orderType;		// 1普通订单(默认),2预定订单,3门店自提订单
 	private String chainCode;		// 自提码
-	private String pre1;		// pre1
+	private String state;		// 10未支付）20已支付）30已发货）40已完成）50退款中）60退货中）
 	private String pre2;		// pre2
 	private String pre3;		// pre3
-	
+
+	private Date endTime;
+
 	public RuiOrder() {
 		super();
 	}
@@ -174,16 +176,16 @@ public class RuiOrder extends DataEntity<RuiOrder> {
 	public void setChainCode(String chainCode) {
 		this.chainCode = chainCode;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+
+	public String getState() {
+		return state;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
+	public void setState(String state) {
+		this.state = state;
 	}
-	
+
 	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
 	public String getPre2() {
 		return pre2;
@@ -201,5 +203,54 @@ public class RuiOrder extends DataEntity<RuiOrder> {
 	public void setPre3(String pre3) {
 		this.pre3 = pre3;
 	}
-	
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public enum ORDER_STATE{
+
+		WAIT_PAY(10, "未支付"),
+
+		PAYED(20,"已支付"),
+
+		DELIVER(30,"已发货"),
+
+		FINISH(40,"已完成"),
+
+		REFUND(50,"退款中"),
+
+		BACK_SALE(60,"退货中");
+
+
+		public int code;
+
+		public String message;
+
+		ORDER_STATE(int code, String message) {
+			this.code = code;
+			this.message = message;
+		}
+		public int getCode() {
+			return code;
+		}
+
+		public void setCode(int code) {
+			this.code = code;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+
+	}
 }

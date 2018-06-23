@@ -8,8 +8,8 @@
 		a.create_time AS "createTime",
 		a.is_show AS "isShow",
 		a.sort AS "sort",
-		a.pre1 AS "pre1",
-		a.pre2 AS "pre2",
+		a.content AS "content",
+		a.is_delete AS "isDelete",
 		a.pre3 AS "pre3"
 	</sql>
 	
@@ -23,14 +23,31 @@
 		<include refid="ruiHomeIndexJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+
+	<select id="getByType" resultType="RuiHomeIndex">
+		SELECT
+		<include refid="ruiHomeIndexColumns"/>
+		FROM rui_home_index a
+		<include refid="ruiHomeIndexJoins"/>
+		<where>
+			BINARY a.web_name = #{webName}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
 	<select id="findList" resultType="RuiHomeIndex">
 		SELECT 
 			<include refid="ruiHomeIndexColumns"/>
 		FROM rui_home_index a
 		<include refid="ruiHomeIndexJoins"/>
 		<where>
-			
+			a.is_delete = 0
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -65,8 +82,8 @@
 			create_time,
 			is_show,
 			sort,
-			pre1,
-			pre2,
+			content,
+			is_delete,
 			pre3
 		) VALUES (
 			#{id},
@@ -74,8 +91,8 @@
 			#{createTime},
 			#{isShow},
 			#{sort},
-			#{pre1},
-			#{pre2},
+			#{content},
+			#{isDelete},
 			#{pre3}
 		)
 	</insert>
@@ -86,8 +103,8 @@
 			create_time = #{createTime},
 			is_show = #{isShow},
 			sort = #{sort},
-			pre1 = #{pre1},
-			pre2 = #{pre2},
+			content = #{content},
+			is_delete = #{isDelete},
 			pre3 = #{pre3}
 		WHERE id = #{id}
 	</update>

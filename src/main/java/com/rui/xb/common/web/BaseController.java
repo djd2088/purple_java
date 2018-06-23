@@ -4,15 +4,22 @@
 package com.rui.xb.common.web;
 
 import java.beans.PropertyEditorSupport;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.rui.xb.common.utils.Des;
+import com.rui.xb.common.utils.GsonUtil;
+import com.rui.xb.common.utils.StringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.slf4j.Logger;
@@ -36,6 +43,10 @@ import com.rui.xb.common.utils.DateUtils;
  * @version 2013-3-23
  */
 public abstract class BaseController {
+
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+
 
 	/**
 	 * 日志对象
@@ -114,7 +125,7 @@ public abstract class BaseController {
 	
 	/**
 	 * 添加Model消息
-	 * @param message
+	 * @param
 	 */
 	protected void addMessage(Model model, String... messages) {
 		StringBuilder sb = new StringBuilder();
@@ -126,7 +137,7 @@ public abstract class BaseController {
 	
 	/**
 	 * 添加Flash消息
-	 * @param message
+	 * @param
 	 */
 	protected void addMessage(RedirectAttributes redirectAttributes, String... messages) {
 		StringBuilder sb = new StringBuilder();
@@ -211,6 +222,46 @@ public abstract class BaseController {
 //				return value != null ? DateUtils.formatDateTime((Date)value) : "";
 //			}
 		});
+	}
+
+	/**
+	 *  参数解密
+	 *
+	 */
+	public JsonObject parseRequest(HttpServletRequest request){
+		try{
+			if(request.getMethod().equals("GET")){
+				String param = request.getParameter("param");
+				param = Des.strDec(param,"100001","","");
+				LOGGER.info("--------------------GET接口参数："+param+"-----------------------------");
+
+				if(StringUtils.isNotBlank(param)){
+					JsonObject obj = GsonUtil.getGsonParser().parse(param).getAsJsonObject();
+					return obj;
+				}
+
+			}else{
+				BufferedReader reader = request.getReader();
+				StringBuffer sb = new StringBuffer();
+				String data;
+				while ((data = reader.readLine()) != null){
+					sb.append(data);
+				}
+				LOGGER.info("--------------------POST接口参数："+sb.toString()+"-----------------------------");
+				JsonObject sbObj = GsonUtil.getGsonParser().parse(sb.toString()).getAsJsonObject();
+				String param = sbObj.get("param").getAsString();
+				param = Des.strDec(param,"100001","","");
+				LOGGER.info("--------------------POST解密后接口参数："+param+"-----------------------------");
+				if(StringUtils.isNotBlank(param)){
+					JsonObject obj = GsonUtil.getGsonParser().parse(param).getAsJsonObject();
+					return obj;
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 	
 }

@@ -33,85 +33,20 @@ public class Des {
 //        System.out.println(dec);
 
         String key1 = "100001";
-        String dec = Des.strDec("330AE1AD2F4D6FCA32D86BCBACE1FE265192161BC51873DAB66DB22CB91176CB63D9D064D56CA19E12CCE393DD759C621CF422DCEDB2B4BDF753E3AF5B73BD3CE19646E808B95CA6FE27505BA2D77D0D6EEEA71A56A16A5ADE9E164C6A3FA461CEE2DE7580279014082D317EC7702AC8B06A2AEA896BC918617EFE1227A1BB339623C60B1697E0A5A2508EB16D81BC749E01908E8FD3482BB2A66711C3EF8BF71314ECD8B24A00B8FE27505BA2D77D0DF40CB69CBE65D5A80D46B51A4333BD592CEA3C49F59D650C9E01908E8FD3482BE04A31DE9AB7A4072B1A7A4242DFF2E75EFB8CFCC3A7D51B5192161BC51873DA063FC7D07A100B1FFB2B2096DBE91382451D30605D60A0DEC165596BB2BA732BA1EFB3073D9A14E5A11A878B329D9F41FE0C785A01217E205E9A7686CC37717ECBCE44FAFC1D0773D66D7A19C47E11D097F46A2051D087005DB32F8D8CC294C9FE27505BA2D77D0D088A5B18906B30250EFB6C786DC822AF574F2A665F31775E0D9D97EE41B64851C909F7E06B0DF088B06A2AEA896BC918E48BC0D896CBB1531B4AEEE99A84BA65E63731F2FEAC2E32", key1, "", "");
-        System.out.println(dec);
         System.out.println(String.valueOf(System.currentTimeMillis()));
-
-        //JSONObject jsonObject = GuoKongUtil.updatePrice(1,10);
-        //System.out.println(jsonObject);
-        float i1 = 1.5f;
-        System.out.println(i1 * 100);
-        double d1 = 1.1;
-        System.out.println(d1 * 10 * 10);
-        BigDecimal decimal = new BigDecimal(d1);
-        //System.out.println(decimal.);
-
-        Map<String,Object> map = new HashMap();
-        map.put("name","dudu");
-        map.put("phone","1322222");
-        map.put("remarks","rema");
-        map.put("cardNo","522101");
-        //System.out.println(Des.strEnc(new Gson().toJson(map),"100001","",""));
-
-        List<GarbageCollectorMXBean> l = ManagementFactory.getGarbageCollectorMXBeans();
-        for(GarbageCollectorMXBean b : l) {
-            System.out.println(b.getName());
-        }
-
-        String aa = "02a3f0772fcca9f415adc990734b45c6f059c7d33ee28362c4852032";
-        System.out.println(Encodes.decodeHex(aa.substring(0,16)));
-        System.out.println(aa.substring(0,16));
-        System.out.println(aa.substring(16));
-        byte[] ss = Encodes.decodeHex(aa.substring(0,16));
-        for (byte s: ss){
-            System.out.print(s);
-        }
-        String admin = "admin";
-        byte[] admins = admin.getBytes();
-        System.out.println("admin = " + Encodes.encodeHex(admins));
-        //System.out.println(Encodes.decodeHex(admin));
-        byte[] admin1 = Encodes.decodeHex("61646d696e");
-        for (byte s : admin1){
-            System.out.println();
-            System.out.print(s
-            );
-            System.out.println();
-        }
-        try {
-            byte[] resute = Digests.md5(admin.getBytes("utf-8"));
-            System.out.println(new String(resute,"utf-8"));
-            System.out.println(Encodes.encodeHex(resute));
-
-            for (byte s : resute){
-                System.out.println();
-                System.out.print(s
-                );
-                System.out.println();
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(Encodes.escapeHtml("<admin"));
-        System.out.println(Encodes.unescapeHtml("&lt;admin"));
-
-        SimpleAuthenticationInfo
-                info = new SimpleAuthenticationInfo();
-
-        //DefaultFilter
-        System.out.println(String.valueOf(System.currentTimeMillis()));
-
-        String a1 = "abcbde";
-        String b1 = "b";
-        System.out.println(a1.indexOf(b1));
-        try {
-            System.out.println(URLEncoder.encode("你好","utf-8"));
-            System.out.println(URLDecoder.decode("%E4%BD%A0%E5%A5%BD","utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        System.out.println(StringUtils.substringAfterLast(a1,b1));
-        System.out.println(StringUtils.substringAfter(a1,b1));
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        map.put("title","banner1");
+        map.put("imgUrl","www.baidu.com");
+        map.put("linkUrl","www.baidu.com");
+        Map<String,Object> map1 = new LinkedHashMap<String, Object>();
+        map1.put("title","banner1");
+        map1.put("imgUrl","www.baidu.com");
+        map1.put("linkUrl","www.baidu.com");
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+        list.add(map);
+        list.add(map1);
+        System.out.println(Des.strEnc(GsonUtil.getNormalString(map),key1,"",""));
+        System.out.println(GsonUtil.getNormalString(list));
     }
 
 
