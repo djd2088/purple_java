@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiBrowingHistoryDao">
+    
+	<sql id="ruiBrowingHistoryColumns">
+		a.id AS "id",
+		a.user_id AS "userId",
+		a.product_id AS "productId",
+		a.track_id AS "trackId",
+		a.create_time AS "createTime",
+		a.is_delete AS "isDelete"
+	</sql>
+	
+	<sql id="ruiBrowingHistoryJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiBrowingHistory">
+		SELECT 
+			<include refid="ruiBrowingHistoryColumns"/>
+		FROM rui_browing_history a
+		<include refid="ruiBrowingHistoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiBrowingHistory">
+		SELECT 
+			<include refid="ruiBrowingHistoryColumns"/>
+		FROM rui_browing_history a
+		<include refid="ruiBrowingHistoryJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiBrowingHistory">
+		SELECT 
+			<include refid="ruiBrowingHistoryColumns"/>
+		FROM rui_browing_history a
+		<include refid="ruiBrowingHistoryJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_browing_history(
+			id,
+			user_id,
+			product_id,
+			track_id,
+			create_time,
+			is_delete
+		) VALUES (
+			#{id},
+			#{userId},
+			#{productId},
+			#{trackId},
+			#{createTime},
+			#{isDelete}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_browing_history SET 	
+			user_id = #{userId},
+			product_id = #{productId},
+			track_id = #{trackId},
+			create_time = #{createTime},
+			is_delete = #{isDelete}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_browing_history
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

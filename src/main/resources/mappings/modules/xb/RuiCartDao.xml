@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiCartDao">
+    
+	<sql id="ruiCartColumns">
+		a.id AS "id",
+		a.user_id AS "userId",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="ruiCartJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiCart">
+		SELECT 
+			<include refid="ruiCartColumns"/>
+		FROM rui_cart a
+		<include refid="ruiCartJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiCart">
+		SELECT 
+			<include refid="ruiCartColumns"/>
+		FROM rui_cart a
+		<include refid="ruiCartJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiCart">
+		SELECT 
+			<include refid="ruiCartColumns"/>
+		FROM rui_cart a
+		<include refid="ruiCartJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_cart(
+			id,
+			user_id,
+			create_time
+		) VALUES (
+			#{id},
+			#{userId},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_cart SET 	
+			user_id = #{userId},
+			create_time = #{createTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_cart
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

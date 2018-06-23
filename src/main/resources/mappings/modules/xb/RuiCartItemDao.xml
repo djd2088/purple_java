@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiCartItemDao">
+    
+	<sql id="ruiCartItemColumns">
+		a.id AS "id",
+		a.cart_id AS "cartId",
+		a.seller_id AS "sellerId",
+		a.seller_name AS "sellerName",
+		a.product_id AS "productId",
+		a.product_name AS "productName",
+		a.product_img AS "productImg",
+		a.spec AS "spec",
+		a.number AS "number"
+	</sql>
+	
+	<sql id="ruiCartItemJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiCartItem">
+		SELECT 
+			<include refid="ruiCartItemColumns"/>
+		FROM rui_cart_item a
+		<include refid="ruiCartItemJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiCartItem">
+		SELECT 
+			<include refid="ruiCartItemColumns"/>
+		FROM rui_cart_item a
+		<include refid="ruiCartItemJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiCartItem">
+		SELECT 
+			<include refid="ruiCartItemColumns"/>
+		FROM rui_cart_item a
+		<include refid="ruiCartItemJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_cart_item(
+			id,
+			cart_id,
+			seller_id,
+			seller_name,
+			product_id,
+			product_name,
+			product_img,
+			spec,
+			number
+		) VALUES (
+			#{id},
+			#{cartId},
+			#{sellerId},
+			#{sellerName},
+			#{productId},
+			#{productName},
+			#{productImg},
+			#{spec},
+			#{number}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_cart_item SET 	
+			cart_id = #{cartId},
+			seller_id = #{sellerId},
+			seller_name = #{sellerName},
+			product_id = #{productId},
+			product_name = #{productName},
+			product_img = #{productImg},
+			spec = #{spec},
+			number = #{number}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_cart_item
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

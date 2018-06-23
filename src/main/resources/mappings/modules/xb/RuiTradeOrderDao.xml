@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiTradeOrderDao">
+    
+	<sql id="ruiTradeOrderColumns">
+		a.id AS "id",
+		a.trade_no AS "tradeNo",
+		a.order_no AS "orderNo",
+		a.pay_no AS "payNo",
+		a.pay_flag AS "payFlag",
+		a.buyer_id AS "buyerId",
+		a.seller_id AS "sellerId",
+		a.pay_method AS "payMethod",
+		a.toltal_fee AS "toltalFee",
+		a.trade_state AS "tradeState",
+		a.create_time AS "createTime",
+		a.pay_time AS "payTime",
+		a.update_time AS "updateTime",
+		a.is_notify AS "isNotify",
+		a.notify_type AS "notifyType",
+		a.is_delete AS "isDelete"
+	</sql>
+	
+	<sql id="ruiTradeOrderJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiTradeOrder">
+		SELECT 
+			<include refid="ruiTradeOrderColumns"/>
+		FROM rui_trade_order a
+		<include refid="ruiTradeOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiTradeOrder">
+		SELECT 
+			<include refid="ruiTradeOrderColumns"/>
+		FROM rui_trade_order a
+		<include refid="ruiTradeOrderJoins"/>
+		<where>
+			<if test="orderNo != null and orderNo != ''">
+				a.order_no = #{orderNo}
+			</if>
+			<if test="tradeNo != null and tradeNo != ''">
+				AND a.trade_no = #{tradeNo}
+			</if>
+			<if test="payNo != null and payNo != ''">
+				AND a.pay_no = #{payNo}
+			</if>
+			<if test="tradeState != null and tradeState !=''">
+				AND a.trade_state = #{tradeState}
+			</if>
+			<if test="createTime != null">
+				AND a.create_time >= #{createTime}
+			</if>
+			<if test="endTime != null">
+				AND a.create_time &lt;= #{endTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiTradeOrder">
+		SELECT 
+			<include refid="ruiTradeOrderColumns"/>
+		FROM rui_trade_order a
+		<include refid="ruiTradeOrderJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_trade_order(
+			id,
+			trade_no,
+			order_no,
+			pay_no,
+			pay_flag,
+			buyer_id,
+			seller_id,
+			pay_method,
+			toltal_fee,
+			trade_state,
+			create_time,
+			pay_time,
+			update_time,
+			is_notify,
+			notify_type,
+			is_delete
+		) VALUES (
+			#{id},
+			#{tradeNo},
+			#{orderNo},
+			#{payNo},
+			#{payFlag},
+			#{buyerId},
+			#{sellerId},
+			#{payMethod},
+			#{toltalFee},
+			#{tradeState},
+			#{createTime},
+			#{payTime},
+			#{updateTime},
+			#{isNotify},
+			#{notifyType},
+			#{isDelete}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_trade_order SET 	
+			trade_no = #{tradeNo},
+			order_no = #{orderNo},
+			pay_no = #{payNo},
+			pay_flag = #{payFlag},
+			buyer_id = #{buyerId},
+			seller_id = #{sellerId},
+			pay_method = #{payMethod},
+			toltal_fee = #{toltalFee},
+			trade_state = #{tradeState},
+			create_time = #{createTime},
+			pay_time = #{payTime},
+			update_time = #{updateTime},
+			is_notify = #{isNotify},
+			notify_type = #{notifyType},
+			is_delete = #{isDelete}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_trade_order
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
