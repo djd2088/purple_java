@@ -26,7 +26,6 @@ public class GsonUtil {
         response.setCharacterEncoding("utf-8");
         response.getWriter().write(getGsonInstance().toJson(new RuiResult(constant.getCode(),constant.getMessage(),
                 data)));
-        return;
     }
 
     public static String getJsonString(Object data) {

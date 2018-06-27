@@ -3,6 +3,7 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,22 +20,37 @@ public class RuiUser extends DataEntity<RuiUser> {
 	private static final long serialVersionUID = 1L;
 	private String username;		// username
 	private String password;		// password
+	@Expose
 	private String sex;		// sex 1男 2女 0保密
+	@Expose
 	private String nickname;		// nickname
+	@Expose
 	private String phone;		// phone
+	@Expose
 	private String email;		// email
-	private String isActive;		// 是否激活
-	private String isLock;		// is_lock
+	private boolean isActive;		// 是否激活
+	private Integer isLock;		// is_lock
+	@Expose
 	private String avatar;		// avatar
 	private Date createTime;		// create_time
 	private String createIp;		// create_ip
 	private Date lastLoginTime;		// last_login_time
 	private String lastLoginIp;		// last_login_ip
 	private Date updateTime;		// update_time
-	private String pre1;		// pre1
-	private String pre2;		// pre2
-	private String pre3;		// pre3
+	@Expose
+	private String qq;
+	@Expose
+	private String wechat;
+	@Expose
+	private boolean isAuthen;		// 是否认证
+	private String schoolId;
+	@Expose
+	private String realName;
+	@Expose
+	private String schoolName;
+	private boolean isOnline;
 
+	//model属性
 	private Date endTime;
 	public RuiUser() {
 		super();
@@ -97,25 +113,23 @@ public class RuiUser extends DataEntity<RuiUser> {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	@Length(min=0, max=4, message="是否激活长度必须介于 0 和 4 之间")
-	public String getIsActive() {
+
+	public boolean isActive() {
 		return isActive;
 	}
 
-	public void setIsActive(String isActive) {
-		this.isActive = isActive;
+	public void setActive(boolean active) {
+		isActive = active;
 	}
-	
-	@Length(min=0, max=4, message="is_lock长度必须介于 0 和 4 之间")
-	public String getIsLock() {
+
+	public Integer getIsLock() {
 		return isLock;
 	}
 
-	public void setIsLock(String isLock) {
+	public void setIsLock(Integer isLock) {
 		this.isLock = isLock;
 	}
-	
+
 	@Length(min=0, max=600, message="avatar长度必须介于 0 和 600 之间")
 	public String getAvatar() {
 		return avatar;
@@ -169,32 +183,37 @@ public class RuiUser extends DataEntity<RuiUser> {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getQq() {
+		return qq;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
-	}
-	
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public void setQq(String qq) {
+		this.qq = qq;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
-	}
-	
-	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
-	public String getPre3() {
-		return pre3;
+	public String getWechat() {
+		return wechat;
 	}
 
-	public void setPre3(String pre3) {
-		this.pre3 = pre3;
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public boolean isAuthen() {
+		return isAuthen;
+	}
+
+	public void setAuthen(boolean authen) {
+		isAuthen = authen;
+	}
+
+	public String getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(String schoolId) {
+		this.schoolId = schoolId;
 	}
 
 	public Date getEndTime() {
@@ -203,5 +222,29 @@ public class RuiUser extends DataEntity<RuiUser> {
 
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+
+	public boolean isOnline() {
+		return isOnline;
+	}
+
+	public void setOnline(boolean online) {
+		isOnline = online;
 	}
 }

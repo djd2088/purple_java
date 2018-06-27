@@ -65,7 +65,7 @@
     <thead>
     <tr>
         <th style="text-align: center;">Id</th>
-        <th style="text-align: center;">用户名</th>
+        <%--<th style="text-align: center;">用户名</th>--%>
         <th style="text-align: center;">性别</th>
         <th style="text-align: center;">昵称</th>
         <th style="text-align: center;">电话</th>
@@ -85,7 +85,7 @@
     <c:forEach items="${page.list}" var="ruiUser">
         <tr>
             <td style="text-align: center;">${ruiUser.id}</td>
-            <td style="text-align: center;">${ruiUser.username}</td>
+            <%--<td style="text-align: center;">${ruiUser.username}</td>--%>
             <%--<td style="text-align: center;"><c:if test="${ruiUser.sex==1}">男</c:if>--%>
                 <%--<c:if test="${ruiUser.sex==2}">女</c:if>--%>
                 <%--<c:if test="${ruiUser.sex==0}">保密</c:if>--%>

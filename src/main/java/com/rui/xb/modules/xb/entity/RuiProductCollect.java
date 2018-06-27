@@ -3,36 +3,33 @@
  */
 package com.rui.xb.modules.xb.entity;
 
-import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.rui.xb.common.persistence.DataEntity;
 
 /**
  * 单表生成Entity
  * @author ThinkGem
- * @version 2018-06-12
+ * @version 2018-06-25
  */
-public class RuiProductPicture extends DataEntity<RuiProductPicture> {
+public class RuiProductCollect extends DataEntity<RuiProductCollect> {
 	
 	private static final long serialVersionUID = 1L;
 	private String productId;		// product_id
-	@Expose
-	private String name;		// 图片名称
-	@Expose
-	private boolean isMainPic;		// is_main_pic
-	@Expose
-	private String picUrl;		// pic_url
-	private String sort;		// 排序
+	private String userId;		// user_id
+	private Date creatTime;		// creat_time
+	private Date updateTime;		// update_time
 	private String pre1;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
 	
-	public RuiProductPicture() {
+	public RuiProductCollect() {
 		super();
 	}
 
-	public RuiProductPicture(String id){
+	public RuiProductCollect(String id){
 		super(id);
 	}
 
@@ -45,40 +42,31 @@ public class RuiProductPicture extends DataEntity<RuiProductPicture> {
 		this.productId = productId;
 	}
 	
-	@Length(min=0, max=20, message="图片名称长度必须介于 0 和 20 之间")
-	public String getName() {
-		return name;
+	@Length(min=0, max=11, message="user_id长度必须介于 0 和 11 之间")
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
-	@Length(min=0, max=4, message="is_main_pic长度必须介于 0 和 4 之间")
-	public boolean getIsMainPic() {
-		return isMainPic;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getCreatTime() {
+		return creatTime;
 	}
 
-	public void setIsMainPic(boolean isMainPic) {
-		this.isMainPic = isMainPic;
+	public void setCreatTime(Date creatTime) {
+		this.creatTime = creatTime;
 	}
 	
-	@Length(min=0, max=200, message="pic_url长度必须介于 0 和 200 之间")
-	public String getPicUrl() {
-		return picUrl;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setPicUrl(String picUrl) {
-		this.picUrl = picUrl;
-	}
-	
-	@Length(min=0, max=4, message="排序长度必须介于 0 和 4 之间")
-	public String getSort() {
-		return sort;
-	}
-
-	public void setSort(String sort) {
-		this.sort = sort;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")

@@ -43,5 +43,9 @@ public class RuiProductPictureService extends CrudService<RuiProductPictureDao, 
 	public void delete(RuiProductPicture ruiProductPicture) {
 		super.delete(ruiProductPicture);
 	}
+
+	public List<RuiProductPicture> findListByProductId(String productId){
+		return dao.findListByProductId(productId);
+	}
 	
 }

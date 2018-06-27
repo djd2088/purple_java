@@ -15,6 +15,8 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.rui.xb.common.utils.Des;
@@ -228,15 +230,15 @@ public abstract class BaseController {
 	 *  参数解密
 	 *
 	 */
-	public JsonObject parseRequest(HttpServletRequest request){
+	public JSONObject parseRequest(HttpServletRequest request){
 		try{
 			if(request.getMethod().equals("GET")){
 				String param = request.getParameter("param");
 				param = Des.strDec(param,"100001","","");
 				LOGGER.info("--------------------GET接口参数："+param+"-----------------------------");
 
-				if(StringUtils.isNotBlank(param)){
-					JsonObject obj = GsonUtil.getGsonParser().parse(param).getAsJsonObject();
+				if(org.apache.commons.lang.StringUtils.isNotBlank(param)){
+					JSONObject obj = JSON.parseObject(param);
 					return obj;
 				}
 
@@ -248,12 +250,12 @@ public abstract class BaseController {
 					sb.append(data);
 				}
 				LOGGER.info("--------------------POST接口参数："+sb.toString()+"-----------------------------");
-				JsonObject sbObj = GsonUtil.getGsonParser().parse(sb.toString()).getAsJsonObject();
-				String param = sbObj.get("param").getAsString();
+				JSONObject sbObj = JSON.parseObject(sb.toString());
+				String param = sbObj.getString("param");
 				param = Des.strDec(param,"100001","","");
 				LOGGER.info("--------------------POST解密后接口参数："+param+"-----------------------------");
-				if(StringUtils.isNotBlank(param)){
-					JsonObject obj = GsonUtil.getGsonParser().parse(param).getAsJsonObject();
+				if(org.apache.commons.lang.StringUtils.isNotBlank(param)){
+					JSONObject obj = JSON.parseObject(param);
 					return obj;
 				}
 			}
@@ -262,6 +264,20 @@ public abstract class BaseController {
 			return null;
 		}
 		return null;
+	}
+
+	public boolean checkIsEmpty(String... params){
+		for (String param : params){
+			if (StringUtils.isEmpty(param))return true;
+		}
+		return false;
+	}
+
+	public boolean checkIsZero(Integer... params){
+		for (Integer param : params){
+			if (param == null || param == 0)return true;
+		}
+		return false;
 	}
 	
 }

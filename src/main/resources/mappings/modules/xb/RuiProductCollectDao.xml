@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiProductCollectDao">
+    
+	<sql id="ruiProductCollectColumns">
+		a.id AS "id",
+		a.product_id AS "productId",
+		a.user_id AS "userId",
+		a.creat_time AS "creatTime",
+		a.update_time AS "updateTime",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiProductCollectJoins">
+		LEFT JOIN sys_user u3 ON u3.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiProductCollect">
+		SELECT 
+			<include refid="ruiProductCollectColumns"/>
+		FROM rui_product_collect a
+		<include refid="ruiProductCollectJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiProductCollect">
+		SELECT 
+			<include refid="ruiProductCollectColumns"/>
+		FROM rui_product_collect a
+		<include refid="ruiProductCollectJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiProductCollect">
+		SELECT 
+			<include refid="ruiProductCollectColumns"/>
+		FROM rui_product_collect a
+		<include refid="ruiProductCollectJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getByProductIdAndUserId" resultType="RuiProductCollect">
+		SELECT
+		<include refid="ruiProductCollectColumns"/>
+		FROM rui_product_collect a
+		<where>
+		<if test="productId != null and productId != ''">
+			a.product_id = #{productId}
+		</if>
+		<if test="userId != null and userId != ''">
+			AND a.user_id = #{userId}
+		</if>
+		</where>
+
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_product_collect(
+			product_id,
+			user_id,
+			creat_time,
+			update_time,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{productId},
+			#{userId},
+			now(),
+			now(),
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_product_collect SET 	
+			product_id = #{productId},
+			user_id = #{userId},
+			update_time = now(),
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_product_collect
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -14,5 +14,9 @@ import com.rui.xb.modules.xb.entity.RuiUser;
  */
 @MyBatisDao
 public interface RuiUserDao extends CrudDao<RuiUser> {
-	
+
+
+    RuiUser getByPhoneAndPswd(RuiUser user);
+
+    void logout(String id);
 }

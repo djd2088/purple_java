@@ -1,6 +1,8 @@
 package com.rui.xb.common.utils;
 
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.rui.xb.common.config.Global;
 import com.rui.xb.common.security.Digests;
 import org.apache.commons.lang3.*;
@@ -35,7 +37,7 @@ public class Des {
         String key1 = "100001";
         System.out.println(String.valueOf(System.currentTimeMillis()));
         Map<String,Object> map = new LinkedHashMap<String, Object>();
-        map.put("title","banner1");
+        map.put("title",1);
         map.put("imgUrl","www.baidu.com");
         map.put("linkUrl","www.baidu.com");
         Map<String,Object> map1 = new LinkedHashMap<String, Object>();
@@ -47,6 +49,12 @@ public class Des {
         list.add(map1);
         System.out.println(Des.strEnc(GsonUtil.getNormalString(map),key1,"",""));
         System.out.println(GsonUtil.getNormalString(list));
+        String json = GsonUtil.getNormalString(map);
+        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+        Object ina = jsonObject.get("title");
+        System.out.println(jsonObject.get("title").getAsInt());
+
+
     }
 
 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiSchoolDictDao">
+    
+	<sql id="ruiSchoolDictColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.longitude AS "longitude",
+		a.latitude AS "latitude",
+		a.pre1 AS "pre1",
+		a.pre2 AS "pre2",
+		a.pre3 AS "pre3"
+	</sql>
+	
+	<sql id="ruiSchoolDictJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiSchoolDict">
+		SELECT 
+			<include refid="ruiSchoolDictColumns"/>
+		FROM rui_school_dict a
+		<include refid="ruiSchoolDictJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiSchoolDict">
+		SELECT 
+			<include refid="ruiSchoolDictColumns"/>
+		FROM rui_school_dict a
+		<include refid="ruiSchoolDictJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiSchoolDict">
+		SELECT 
+			<include refid="ruiSchoolDictColumns"/>
+		FROM rui_school_dict a
+		<include refid="ruiSchoolDictJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_school_dict(
+			id,
+			name,
+			longitude,
+			latitude,
+			pre1,
+			pre2,
+			pre3
+		) VALUES (
+			#{id},
+			#{name},
+			#{longitude},
+			#{latitude},
+			#{pre1},
+			#{pre2},
+			#{pre3}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_school_dict SET 	
+			name = #{name},
+			longitude = #{longitude},
+			latitude = #{latitude},
+			pre1 = #{pre1},
+			pre2 = #{pre2},
+			pre3 = #{pre3}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_school_dict
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

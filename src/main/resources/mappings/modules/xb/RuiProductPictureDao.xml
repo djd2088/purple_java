@@ -47,6 +47,17 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="findListByProductId" resultType="RuiProductPicture">
+		SELECT
+		<include refid="ruiProductPictureColumns"/>
+		FROM rui_product_picture a
+		<where>
+			a.product_id = #{productId}
+		</where>
+		ORDER BY a.is_main_pic DESC
+	</select>
+
 	
 	<select id="findAllList" resultType="RuiProductPicture">
 		SELECT 

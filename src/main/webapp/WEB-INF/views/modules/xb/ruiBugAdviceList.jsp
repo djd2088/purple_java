@@ -26,6 +26,13 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>类型：</label>
+				<form:select path="type" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('advice')}" itemLabel="label" itemValue="value"
+								  htmlEscape="false"/>
+				</form:select>
+			</li>
 			<li><label>已处理：</label>
 				<form:select path="isDeal" class="input-medium">
 					<form:option value="" label=""/>
@@ -50,7 +57,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-                <th style="text-align: center;">用户名</th>
+                <%--<th style="text-align: center;">用户名</th>--%>
                 <th style="text-align: center;">电话</th>
                 <th style="text-align: center;">意见内容</th>
                 <th style="text-align: center;">是否处理</th>
@@ -62,7 +69,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="ruiBugAdvice">
 			<tr>
-                <td style="text-align: center;">${ruiBugAdvice.username}</td>
+                <%--<td style="text-align: center;">${ruiBugAdvice.username}</td>--%>
                 <td style="text-align: center;">${ruiBugAdvice.phone}</td>
                 <td style="text-align: center;">${ruiBugAdvice.content}</td>
                 <td style="text-align: center;">${ruiBugAdvice.isDeal==1?'是':'否'}</td>

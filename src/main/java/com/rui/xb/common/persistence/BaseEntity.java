@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.google.gson.annotations.Expose;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,6 +33,7 @@ public abstract class BaseEntity<T> implements Serializable {
 	/**
 	 * 实体编号（唯一标识）
 	 */
+	@Expose
 	protected String id;
 	
 	/**

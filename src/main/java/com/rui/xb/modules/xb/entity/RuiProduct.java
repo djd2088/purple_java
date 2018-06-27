@@ -3,8 +3,11 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rui.xb.modules.sys.entity.User;
 
@@ -20,23 +23,28 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	private static final long serialVersionUID = 1L;
 	private String categoryId;		// category_id
 	private String productCode;		// product_code
+	@Expose
 	private String productName;		// product_name
+	@Expose
 	private String productDesc;		// product_desc
 	private String prodcutAdvert;		// 商品 广告
 	private Date createTime;		// create_time
+	@Expose
 	private Date onlineTime;		// 上架时间
 	private Date offlineTime;		// 下架时间
 	private Date updateTime;		// update_time
 	private String isDelete;		// is_delete
-	private String state;		// 是否上架(0表示未上架, 1表示上架,10表示违规（禁售）)
+	@Expose
+	private Integer state;		// 是否上架(0表示未上架, 1表示上架,10表示违规（禁售）)
 	private String stateRemark;		// 违规原因
 	private String auditState;		// 1通过，0未通过，10审核中
 	private String auditRemark;		// 审核描述
 	private String isLock;		// is_lock
 	private String isCommend;		// 是否推荐
 	private String freight;		// 运费，0为免运
-	private User user;		// user_id
-	private String pre1;		// pre1
+	private String userId;		// 所属用户
+	@Expose
+	private String price;		// price
 	private String pre2;		// pre2
 	private String pre3;		// pre3
 
@@ -46,6 +54,25 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	private String categoryName;
 	private String username;
 	private String phone;
+	@Expose
+	private boolean isAuthen;  // 用户是否认证
+	@Expose
+	private String schoolName;
+	@Expose
+	private List<RuiProductPicture> pictures;
+	@Expose
+	private String mainPic;
+	@Expose
+	private int clickCount;
+	@Expose
+	private boolean isCollect;
+	@Expose
+	private RuiUser sellerInfo;
+
+	//query字段
+	private String keyWord;
+	private String orderBy;
+
 	public RuiProduct() {
 		super();
 	}
@@ -144,12 +171,12 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 		this.isDelete = isDelete;
 	}
 	
-	@Length(min=0, max=4, message="是否上架(0表示未上架, 1表示上架,10表示违规（禁售）)长度必须介于 0 和 4 之间")
-	public String getState() {
+
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 	
@@ -205,24 +232,23 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	public void setFreight(String freight) {
 		this.freight = freight;
 	}
-	
-	public User getUser() {
-		return user;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
+	public String getPrice() {
+		return price;
 	}
-	
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
 	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
 	public String getPre2() {
 		return pre2;
@@ -271,5 +297,77 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
+	public String getMainPic() {
+		return mainPic;
+	}
+
+	public void setMainPic(String mainPic) {
+		this.mainPic = mainPic;
+	}
+
+	public int getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(int clickCount) {
+		this.clickCount = clickCount;
+	}
+
+	public List<RuiProductPicture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<RuiProductPicture> pictures) {
+		this.pictures = pictures;
+	}
+
+	public boolean isCollect() {
+		return isCollect;
+	}
+
+	public void setCollect(boolean collect) {
+		isCollect = collect;
+	}
+
+	public RuiUser getSellerInfo() {
+		return sellerInfo;
+	}
+
+	public void setSellerInfo(RuiUser sellerInfo) {
+		this.sellerInfo = sellerInfo;
+	}
+
+	public boolean isAuthen() {
+		return isAuthen;
+	}
+
+	public void setAuthen(boolean authen) {
+		isAuthen = authen;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
 	}
 }

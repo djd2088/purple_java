@@ -5,16 +5,14 @@ package com.rui.xb.modules.xb.dao;
 
 import com.rui.xb.common.persistence.CrudDao;
 import com.rui.xb.common.persistence.annotation.MyBatisDao;
-import com.rui.xb.modules.xb.entity.RuiBrowingHistory;
+import com.rui.xb.modules.xb.entity.RuiProductCollect;
 
 /**
  * 单表生成DAO接口
  * @author ThinkGem
- * @version 2018-06-22
+ * @version 2018-06-25
  */
 @MyBatisDao
-public interface RuiBrowingHistoryDao extends CrudDao<RuiBrowingHistory> {
-
-    Integer findCountByProductId(String productId);
-
+public interface RuiProductCollectDao extends CrudDao<RuiProductCollect> {
+    RuiProductCollect getByProductIdAndUserId(RuiProductCollect collect);
 }

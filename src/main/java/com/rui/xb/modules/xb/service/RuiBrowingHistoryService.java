@@ -43,5 +43,9 @@ public class RuiBrowingHistoryService extends CrudService<RuiBrowingHistoryDao, 
 	public void delete(RuiBrowingHistory ruiBrowingHistory) {
 		super.delete(ruiBrowingHistory);
 	}
+
+	public Integer findConutByProductId(String productId){
+		return dao.findCountByProductId(productId);
+	}
 	
 }

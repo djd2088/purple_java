@@ -5,24 +5,19 @@
 	<sql id="ruiBugAdviceColumns">
 		a.id AS "id",
 		a.content AS "content",
-		a.user_id AS "user.id",
+		a.user_id AS "userId",
 		a.create_time AS "createTime",
 		a.is_deal AS "isDeal",
 		a.deal_time AS "dealTime",
-		a.pre2 AS "pre2",
-		a.pre3 AS "pre3",
-		u3.name AS "user.name"
+		a.type AS "type",
+		a.pre3 AS "pre3"
 	</sql>
-	
-	<sql id="ruiBugAdviceJoins">
-		LEFT JOIN sys_user u3 ON u3.id = a.user_id
-	</sql>
+
     
 	<select id="get" resultType="RuiBugAdvice">
 		SELECT 
 			<include refid="ruiBugAdviceColumns"/>
 		FROM rui_bug_advice a
-		<include refid="ruiBugAdviceJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
@@ -31,7 +26,6 @@
 			<include refid="ruiBugAdviceColumns"/>
 		,b.username,b.phone
 		FROM rui_bug_advice a
-		<include refid="ruiBugAdviceJoins"/>
 		LEFT JOIN rui_user b ON a.user_id = b.id
 		<where>
 			<!--<if test="username != null and username !=''">-->
@@ -43,6 +37,9 @@
             <if test="isDeal != null and isDeal != ''">
                 a.is_deal = #{isDeal}
             </if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
 			<if test="createTime != null">
 				AND a.create_time >= #{createTime}
 			</if>
@@ -63,7 +60,6 @@
 		SELECT 
 			<include refid="ruiBugAdviceColumns"/>
 		FROM rui_bug_advice a
-		<include refid="ruiBugAdviceJoins"/>
 		<where>
 			
 		</where>		
@@ -78,22 +74,18 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_bug_advice(
-			id,
 			content,
 			user_id,
 			create_time,
-			is_deal,
 			deal_time,
-			pre2,
+			type,
 			pre3
 		) VALUES (
-			#{id},
 			#{content},
-			#{user.id},
-			#{createTime},
-			#{isDeal},
+			#{userId},
+			now(),
 			#{dealTime},
-			#{pre2},
+			#{type},
 			#{pre3}
 		)
 	</insert>
@@ -101,11 +93,10 @@
 	<update id="update">
 		UPDATE rui_bug_advice SET 	
 			content = #{content},
-			user_id = #{user.id},
-			create_time = #{createTime},
+			user_id = #{userId},
 			is_deal = #{isDeal},
 			deal_time = now(),
-			pre2 = #{pre2},
+			type = #{type},
 			pre3 = #{pre3}
 		WHERE id = #{id}
 	</update>

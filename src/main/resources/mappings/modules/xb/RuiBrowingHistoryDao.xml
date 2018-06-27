@@ -56,21 +56,29 @@
 			</otherwise>
 		</choose>
 	</select>
+
+
+	<select id="findCountByProductId" resultType="Integer">
+		SELECT
+  		COUNT(1)
+		FROM rui_browing_history a
+		WHERE a.product_id = #{productId}
+	</select>
+
+
 	
 	<insert id="insert">
 		INSERT INTO rui_browing_history(
-			id,
 			user_id,
 			product_id,
 			track_id,
 			create_time,
 			is_delete
 		) VALUES (
-			#{id},
 			#{userId},
 			#{productId},
 			#{trackId},
-			#{createTime},
+			now(),
 			#{isDelete}
 		)
 	</insert>
@@ -80,7 +88,6 @@
 			user_id = #{userId},
 			product_id = #{productId},
 			track_id = #{trackId},
-			create_time = #{createTime},
 			is_delete = #{isDelete}
 		WHERE id = #{id}
 	</update>

@@ -19,13 +19,14 @@ public class RuiBugAdvice extends DataEntity<RuiBugAdvice> {
 	
 	private static final long serialVersionUID = 1L;
 	private String content;		// content
-	private User user;		// user_id
+	private String userId;		// user_id
 	private Date createTime;		// create_time
 	private String isDeal;		// is_deal
 	private Date dealTime;		// pre1
-	private String pre2;		// pre2
+	private String type;		// pre2
 	private String pre3;		// pre3
 
+	//model
 	private Date endTime;
 	private String username;
 	private String phone;
@@ -46,15 +47,15 @@ public class RuiBugAdvice extends DataEntity<RuiBugAdvice> {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	public User getUser() {
-		return user;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getCreateTime() {
 		return createTime;
@@ -81,15 +82,15 @@ public class RuiBugAdvice extends DataEntity<RuiBugAdvice> {
 		this.dealTime = dealTime;
 	}
 
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+
+	public String getType() {
+		return type;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
+	public void setType(String type) {
+		this.type = type;
 	}
-	
+
 	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
 	public String getPre3() {
 		return pre3;
@@ -121,5 +122,11 @@ public class RuiBugAdvice extends DataEntity<RuiBugAdvice> {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public enum AdviceType{
+		ADVICE,
+		JOIN,
+		SPONSOR
 	}
 }

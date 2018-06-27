@@ -18,9 +18,12 @@
 		a.last_login_time AS "lastLoginTime",
 		a.last_login_ip AS "lastLoginIp",
 		a.update_time AS "updateTime",
-		a.pre1 AS "pre1",
-		a.pre2 AS "pre2",
-		a.pre3 AS "pre3"
+		a.qq AS "qq",
+		a.wechat AS "wechat",
+		a.is_authen AS "isAuthen",
+		a.school_id AS "schoolId",
+		a.real_name AS "realName",
+		a.is_online AS "isOnline"
 	</sql>
 	
 	<sql id="ruiUserJoins">
@@ -82,6 +85,23 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="getByPhoneAndPswd" resultType="RuiUser">
+		SELECT
+		<include refid="ruiUserColumns"/>
+		FROM rui_user a
+		<where>
+            a.phone = #{phone}
+			<if test="password != null and password !=''">
+				AND BINARY a.password = #{password}
+			</if>
+
+
+		</where>
+	</select>
+
+
+
 	
 	<insert id="insert">
 		INSERT INTO rui_user(
@@ -91,17 +111,18 @@
 			nickname,
 			phone,
 			email,
-			is_active,
-			is_lock,
 			avatar,
 			create_time,
 			create_ip,
 			last_login_time,
 			last_login_ip,
 			update_time,
-			pre1,
-			pre2,
-			pre3
+			qq,
+			wechat,
+			is_authen,
+			school_id,
+			real_name,
+			is_online
 		) VALUES (
 			#{username},
 			#{password},
@@ -109,17 +130,18 @@
 			#{nickname},
 			#{phone},
 			#{email},
-			#{isActive},
-			#{isLock},
 			#{avatar},
 			now(),
 			#{createIp},
 			now(),
 			#{lastLoginIp},
 			now(),
-			#{pre1},
-			#{pre2},
-			#{pre3}
+			#{qq},
+			#{wechat},
+			#{isAuthen},
+			#{schoolId},
+			#{realName},
+			#{isOnline}
 		)
 	</insert>
 	
@@ -134,17 +156,24 @@
 			is_active = #{isActive},
 			is_lock = #{isLock},
 			avatar = #{avatar},
-			create_time = #{createTime},
-			create_ip = #{createIp},
-			last_login_time = #{lastLoginTime},
+			last_login_time = now(),
 			last_login_ip = #{lastLoginIp},
 			update_time = now(),
-			pre1 = #{pre1},
-			pre2 = #{pre2},
-			pre3 = #{pre3}
+			qq = #{qq},
+			wechat = #{wechat},
+			is_authen = #{isAuthen},
+			school_id = #{schoolId},
+			real_name = #{realName},
+			is_online = #{isOnline}
 		WHERE id = #{id}
 	</update>
-	
+
+    <update id="logout">
+        UPDATE rui_user SET
+        is_online = 0
+        WHERE id = #{id}
+    </update>
+
 	<update id="delete">
 		DELETE FROM rui_user
 		WHERE id = #{id}
