@@ -20,8 +20,8 @@
 		a.order_type AS "orderType",
 		a.chain_code AS "chainCode",
 		a.state AS "state",
-		a.pre2 AS "pre2",
-		a.pre3 AS "pre3"
+		a.receive_id AS "receiveId",
+		a.receive_address AS "receiveAddress"
 	</sql>
 	
 	<sql id="ruiOrderJoins">
@@ -41,6 +41,12 @@
 		FROM rui_order a
 		<include refid="ruiOrderJoins"/>
 		<where>
+			<if test="buyerId != null and buyerId != ''">
+				a.buyer_id = #{buyerId}
+			</if>
+			<if test="sellerId != null and sellerId != ''">
+				a.seller_id = #{sellerId}
+			</if>
 			<if test="orderNo != null and orderNo != ''">
 				a.order_no = #{orderNo}
 			</if>
@@ -53,6 +59,7 @@
 			<if test="endTime != null">
 				AND a.create_time &lt;= #{endTime}
 			</if>
+
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -79,10 +86,53 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
+
+
+	<insert id="insertGetId" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO rui_order(
+		order_no,
+		pay_no,
+		seller_id,
+		seller_name,
+		buyer_id,
+		buyer_name,
+		create_time,
+		pay_time,
+		finish_time,
+		goods_amount,
+		order_amount,
+		pd_amount,
+		freight,
+		order_type,
+		chain_code,
+		state,
+		receive_id,
+		receive_address
+		) VALUES (
+		#{orderNo},
+		#{payNo},
+		#{sellerId},
+		#{sellerName},
+		#{buyerId},
+		#{buyerName},
+		now(),
+		#{payTime},
+		#{finishTime},
+		#{goodsAmount},
+		#{orderAmount},
+		#{pdAmount},
+		#{freight},
+		#{orderType},
+		#{chainCode},
+		#{state},
+		#{receiveId},
+		#{receiveAddress}
+		)
+	</insert>
+
 	<insert id="insert">
 		INSERT INTO rui_order(
-			id,
 			order_no,
 			pay_no,
 			seller_id,
@@ -99,10 +149,9 @@
 			order_type,
 			chain_code,
 			state,
-			pre2,
-			pre3
+			receive_id,
+			receive_address
 		) VALUES (
-			#{id},
 			#{orderNo},
 			#{payNo},
 			#{sellerId},
@@ -119,11 +168,18 @@
 			#{orderType},
 			#{chainCode},
 			#{state},
-			#{pre2},
-			#{pre3}
+			#{receiveId},
+			#{receiveAddress}
 		)
 	</insert>
-	
+
+	<update id="cancelOrder">
+		UPDATE rui_order SET
+		finish_time = now(),
+		state = 70
+		WHERE id = #{orderId}
+	</update>
+
 	<update id="update">
 		UPDATE rui_order SET 	
 			order_no = #{orderNo},
@@ -142,8 +198,8 @@
 			order_type = #{orderType},
 			chain_code = #{chainCode},
 			state = #{state},
-			pre2 = #{pre2},
-			pre3 = #{pre3}
+			receive_id = #{receiveId},
+			receive_address = #{receiveAddress}
 		WHERE id = #{id}
 	</update>
 	

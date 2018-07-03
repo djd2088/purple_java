@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiReceiveAddressDao">
+    
+	<sql id="ruiReceiveAddressColumns">
+		a.id AS "id",
+		a.user_id AS "userId",
+		a.name AS "name",
+		a.province AS "province",
+		a.phone AS "phone",
+		a.zipcode AS "zipcode",
+		a.is_default AS "isDefault",
+		a.is_delete AS "isDelete",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+		a.location AS "location",
+		a.pre2 AS "pre2"
+	</sql>
+	
+	<sql id="ruiReceiveAddressJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.user_id
+	</sql>
+    
+	<select id="get" resultType="RuiReceiveAddress">
+		SELECT 
+			<include refid="ruiReceiveAddressColumns"/>
+		FROM rui_receive_address a
+		<include refid="ruiReceiveAddressJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RuiReceiveAddress">
+		SELECT 
+			<include refid="ruiReceiveAddressColumns"/>
+		FROM rui_receive_address a
+		<include refid="ruiReceiveAddressJoins"/>
+		<where>
+			<if test="userId != null and userId != ''">
+				a.user_id = #{userId}
+			</if>
+		</where>
+		ORDER BY a.is_default DESC
+	</select>
+	
+	<select id="findAllList" resultType="RuiReceiveAddress">
+		SELECT 
+			<include refid="ruiReceiveAddressColumns"/>
+		FROM rui_receive_address a
+		<include refid="ruiReceiveAddressJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_receive_address(
+			user_id,
+			name,
+			province,
+			phone,
+			zipcode,
+			is_default,
+			create_time,
+			update_time,
+			location,
+			pre2
+		) VALUES (
+			#{userId},
+			#{name},
+			#{province},
+			#{phone},
+			#{zipcode},
+			#{isDefault},
+			now(),
+			now(),
+			#{location},
+			#{pre2}
+		)
+	</insert>
+
+	<update id="setNoDefault">
+		UPDATE rui_receive_address SET
+		is_default = 0
+		WHERE user_id = #{userId}
+	</update>
+
+	<update id="update">
+		UPDATE rui_receive_address SET 	
+			user_id = #{userId},
+			name = #{name},
+			province = #{province},
+			phone = #{phone},
+			zipcode = #{zipcode},
+			is_default = #{isDefault},
+			is_delete = #{isDelete},
+			update_time = #{updateTime},
+			location = #{location},
+			pre2 = #{pre2}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_receive_address
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

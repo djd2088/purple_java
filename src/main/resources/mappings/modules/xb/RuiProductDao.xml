@@ -23,16 +23,18 @@
 		a.freight AS "freight",
 		a.user_id AS "userId",
 		a.price AS "price",
-		a.pre2 AS "pre2",
-		a.pre3 AS "pre3"
+		a.type AS "type",
+		a.stock AS "stock"
 	</sql>
 
     
 	<select id="get" resultType="RuiProduct">
 		SELECT 
 			<include refid="ruiProductColumns"/>
+		,b.pic_url AS "mainPic"
 		FROM rui_product a
-		WHERE a.id = #{id}
+		LEFT JOIN rui_product_picture b ON a.id = b.product_id
+		WHERE a.id = #{id} AND b.is_main_pic = 1
 	</select>
 	
 	<select id="findList" resultType="RuiProduct">
@@ -61,6 +63,9 @@
 			<if test="owner != null and owner != ''">
 				AND (b.username = #{owner} OR b.phone = #{owner})
 			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -83,12 +88,21 @@
 		LEFT JOIN (SELECT product_id,COUNT(1) AS counts FROM rui_browing_history GROUP BY product_id)
 		d ON a.id = d.product_id
 		<where>
-			b.is_main_pic = 1
+
 			<if test="categoryId > 0">
-				AND a.category_id = #{categoryId}
+				a.category_id = #{categoryId}
 			</if>
 			<if test="keyWord != null and keyWord != '' ">
 				AND a.product_name like concat('%',#{keyWord},'%')
+			</if>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+				<if test="type == 1">
+					AND b.is_main_pic = 1
+				</if>
+			</if>
+			<if test="userId != null and userId != ''">
+				AND a.user_id = #{userId}
 			</if>
 			<!--<if test="minPrice > 0">-->
 				<!--AND a.price >= #{minPrice}-->
@@ -106,6 +120,33 @@
 				<when test="orderBy == 'BROW_HIGH'">
 				</when>
 			</choose>
+		</where>
+	</select>
+
+
+
+	<select id="findCollectProBaseListByUserId" resultType="RuiProduct">
+		SELECT
+		<include refid="ruiProductColumns"/>
+		,b.pic_url AS "mainPic",c.is_authen AS "isAuthen",c.school_name AS "schoolName",
+		d.counts AS "clickCount"
+		FROM rui_product a
+		RIGHT JOIN rui_product_collect clt ON clt.product_id = a.id
+		LEFT JOIN rui_product_picture b ON a.id = b.product_id
+		LEFT JOIN rui_user c ON a.user_id = c.id
+		LEFT JOIN (SELECT product_id,COUNT(1) AS counts FROM rui_browing_history GROUP BY product_id)
+		d ON a.id = d.product_id
+		<where>
+			<if test="type != null and type != ''">
+				AND a.type = #{type}
+				<if test="type == 1">
+					AND b.is_main_pic = 1
+				</if>
+			</if>
+			<if test="userId != null and userId != ''">
+				AND clt.user_id = #{userId}
+			</if>
+
 		</where>
 	</select>
 
@@ -132,10 +173,50 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
+
+
+
+	<insert id="insertGetId" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO rui_product(
+		category_id,
+		product_code,
+		product_name,
+		product_desc,
+		prodcut_advert,
+		create_time,
+		online_time,
+		offline_time,
+		update_time,
+		state_remark,
+		audit_remark,
+		freight,
+		user_id,
+		price,
+		type,
+		stock
+		) VALUES (
+		#{categoryId},
+		#{productCode},
+		#{productName},
+		#{productDesc},
+		#{prodcutAdvert},
+		now(),
+		#{onlineTime},
+		#{offlineTime},
+		now(),
+		#{stateRemark},
+		#{auditRemark},
+		#{freight},
+		#{userId},
+		#{price},
+		#{type},
+		#{stock}
+		)
+	</insert>
+
 	<insert id="insert">
 		INSERT INTO rui_product(
-			id,
 			category_id,
 			product_code,
 			product_name,
@@ -145,41 +226,30 @@
 			online_time,
 			offline_time,
 			update_time,
-			is_delete,
-			state,
 			state_remark,
-			audit_state,
 			audit_remark,
-			is_lock,
-			is_commend,
 			freight,
 			user_id,
 			price,
-			pre2,
-			pre3
+			type,
+			stock
 		) VALUES (
-			#{id},
 			#{categoryId},
 			#{productCode},
 			#{productName},
 			#{productDesc},
 			#{prodcutAdvert},
-			#{createTime},
+			now(),
 			#{onlineTime},
 			#{offlineTime},
 			#{updateTime},
-			#{isDelete},
-			#{state},
 			#{stateRemark},
-			#{auditState},
 			#{auditRemark},
-			#{isLock},
-			#{isCommend},
 			#{freight},
 			#{userId},
 			#{price},
-			#{pre2},
-			#{pre3}
+			#{type},
+			#{stock}
 		)
 	</insert>
 	
@@ -190,10 +260,9 @@
 			product_name = #{productName},
 			product_desc = #{productDesc},
 			prodcut_advert = #{prodcutAdvert},
-			create_time = #{createTime},
 			online_time = #{onlineTime},
 			offline_time = #{offlineTime},
-			update_time = #{updateTime},
+			update_time = now(),
 			is_delete = #{isDelete},
 			state = #{state},
 			state_remark = #{stateRemark},
@@ -204,8 +273,8 @@
 			freight = #{freight},
 			user_id = #{userId},
 			price = #{price},
-			pre2 = #{pre2},
-			pre3 = #{pre3}
+			type = #{type},
+			stock = #{stock}
 		WHERE id = #{id}
 	</update>
 	

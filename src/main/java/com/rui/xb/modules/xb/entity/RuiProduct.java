@@ -35,7 +35,7 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	private Date updateTime;		// update_time
 	private String isDelete;		// is_delete
 	@Expose
-	private Integer state;		// 是否上架(0表示未上架, 1表示上架,10表示违规（禁售）)
+	private Integer state;		// 是否上架(0表示未上架, 1表示上架,2已售罄,10表示违规（禁售）)
 	private String stateRemark;		// 违规原因
 	private String auditState;		// 1通过，0未通过，10审核中
 	private String auditRemark;		// 审核描述
@@ -45,8 +45,10 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 	private String userId;		// 所属用户
 	@Expose
 	private String price;		// price
-	private String pre2;		// pre2
-	private String pre3;		// pre3
+	@Expose
+	private String type;		// 1 普通商品  2 求购
+	@Expose
+	private int stock;		// 库存
 
 
 	//model字段
@@ -249,22 +251,20 @@ public class RuiProduct extends DataEntity<RuiProduct> {
 		this.price = price;
 	}
 
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public String getType() {
+		return type;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
-	}
-	
-	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
-	public String getPre3() {
-		return pre3;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public void setPre3(String pre3) {
-		this.pre3 = pre3;
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	public String getOwner() {

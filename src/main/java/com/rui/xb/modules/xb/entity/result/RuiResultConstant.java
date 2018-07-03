@@ -37,7 +37,11 @@ public enum  RuiResultConstant {
 
     FAILED_USER_EXIST(0,"手机已被注册"),
 
-    FAILED_USER_NO_EXIST(0,"手机已被注册");
+    FAILED_USER_NO_EXIST(0,"手机已被注册"),
+
+    FAILED_PRODUCT_PIC(0,"确认图片上传无误"),
+
+    FAILED_ORDER_NO_STOCK(0,"库存不足");
 
     public int code;
 

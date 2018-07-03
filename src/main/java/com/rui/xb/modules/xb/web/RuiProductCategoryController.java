@@ -89,11 +89,21 @@ public class RuiProductCategoryController extends BaseController {
 
 	@RequestMapping(value = "getParentByLevel")
     @ResponseBody
-	public String getParentByLevel(String level){
-		List<RuiProductCategory> list = ruiProductCategoryService.findParentByCategoryLevel(level);
-		Map<String,Object> data = new HashMap<String, Object>();
+	public String getParentByLevel(Integer level){
+
+		List<RuiProductCategory> list = ruiProductCategoryService.findParentByCategoryLevel(String.valueOf(level - 1));
+		Map<String,Object> data = new HashMap<>();
 		data.put("items",list);
 		return new Gson().toJson(data);
 	}
+
+    @RequiresPermissions("xb:ruiProductCategory:edit")
+    @RequestMapping(value = "commend")
+    public String commendLevel2(RuiProductCategory ruiProductCategory, RedirectAttributes redirectAttributes) {
+        ruiProductCategoryService.save(ruiProductCategory);
+        addMessage(redirectAttributes, "操作成功");
+        return "redirect:"+Global.getAdminPath()+"/xb/ruiProductCategory/?repage";
+    }
+
 
 }

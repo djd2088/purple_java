@@ -3,8 +3,11 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.rui.xb.common.persistence.DataEntity;
@@ -17,26 +20,40 @@ import com.rui.xb.common.persistence.DataEntity;
 public class RuiOrder extends DataEntity<RuiOrder> {
 	
 	private static final long serialVersionUID = 1L;
+	@Expose
 	private String orderNo;		// order_no
+	@Expose
 	private String payNo;		// pay_no
+	@Expose
 	private String sellerId;		// seller_id
 	private String sellerName;		// seller_name
+	@Expose
 	private String buyerId;		// buyer_id
 	private String buyerName;		// buyer_name
+	@Expose
 	private Date createTime;		// create_time
+	@Expose
 	private Date payTime;		// pay_time
 	private Date finishTime;		// finish_time
 	private String goodsAmount;		// 商品总价
+	@Expose
 	private String orderAmount;		// 订单总价
 	private String pdAmount;		// 预付金额
+	@Expose
 	private String freight;		// 运费
+	@Expose
 	private String orderType;		// 1普通订单(默认),2预定订单,3门店自提订单
 	private String chainCode;		// 自提码
-	private String state;		// 10未支付）20已支付）30已发货）40已完成）50退款中）60退货中）
-	private String pre2;		// pre2
-	private String pre3;		// pre3
+	@Expose
+	private int state;		// 10未支付）20已支付）30已发货）40已完成）50退款中）60退货中）
+	@Expose
+	private String receiveAddress;		// pre2
+	private String receiveId;		// pre3
 
+	//model
 	private Date endTime;
+	@Expose
+	private List<RuiOrderItem> items;
 
 	public RuiOrder() {
 		super();
@@ -178,30 +195,28 @@ public class RuiOrder extends DataEntity<RuiOrder> {
 	}
 
 
-	public String getState() {
+	public int getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(int state) {
 		this.state = state;
 	}
 
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public String getReceiveAddress() {
+		return receiveAddress;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
-	}
-	
-	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
-	public String getPre3() {
-		return pre3;
+	public void setReceiveAddress(String receiveAddress) {
+		this.receiveAddress = receiveAddress;
 	}
 
-	public void setPre3(String pre3) {
-		this.pre3 = pre3;
+	public String getReceiveId() {
+		return receiveId;
+	}
+
+	public void setReceiveId(String receiveId) {
+		this.receiveId = receiveId;
 	}
 
 	public Date getEndTime() {
@@ -212,26 +227,39 @@ public class RuiOrder extends DataEntity<RuiOrder> {
 		this.endTime = endTime;
 	}
 
-	public enum ORDER_STATE{
+	public List<RuiOrderItem> getItems() {
+		return items;
+	}
 
-		WAIT_PAY(10, "未支付"),
+	public void setItems(List<RuiOrderItem> items) {
+		this.items = items;
+	}
 
-		PAYED(20,"已支付"),
+	public enum ORDER_STATE_TYPE {
 
-		DELIVER(30,"已发货"),
+		STATE_WAIT_PAY(10, "未支付"),
 
-		FINISH(40,"已完成"),
+		STATE_PAYED(20,"已支付"),
 
-		REFUND(50,"退款中"),
+		STATE_DELIVER(30,"已发货"),
 
-		BACK_SALE(60,"退货中");
+		STATE_FINISH(40,"已完成"),
 
+		STATE_REFUND(50,"退款中"),
+
+		STATE_BACK_SALE(60,"退货中"),
+
+		STATE_CANCEL(70,"已取消"),
+
+		TYPE_NORMAL(1,"正常订单"),
+
+		TYPE_BY_FACE(3,"当面交易");
 
 		public int code;
 
 		public String message;
 
-		ORDER_STATE(int code, String message) {
+		ORDER_STATE_TYPE(int code, String message) {
 			this.code = code;
 			this.message = message;
 		}

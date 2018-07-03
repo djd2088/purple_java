@@ -1,10 +1,15 @@
 package com.rui.xb.modules.xb.web_interface;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
+import com.rui.xb.common.persistence.Page;
 import com.rui.xb.common.utils.GsonUtil;
 import com.rui.xb.common.web.BaseController;
+import com.rui.xb.modules.xb.entity.RuiProduct;
+import com.rui.xb.modules.xb.entity.RuiReceiveAddress;
 import com.rui.xb.modules.xb.entity.RuiUser;
 import com.rui.xb.modules.xb.entity.result.RuiResultConstant;
+import com.rui.xb.modules.xb.service.RuiReceiveAddressService;
 import com.rui.xb.modules.xb.service.RuiUserService;
 import com.rui.xb.modules.xb.utils.RongCloudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: DuJianDong
@@ -29,9 +36,13 @@ public class UserAppController extends BaseController{
     @Autowired
     RuiUserService userService;
 
+
+    @Autowired
+    RuiReceiveAddressService addressService;
+
     /**注册*/
     @ResponseBody
-    @RequestMapping(value = "sign")
+    @RequestMapping(value = "sign",method = RequestMethod.POST)
     public void sign(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {
@@ -54,7 +65,7 @@ public class UserAppController extends BaseController{
             user.setNickname(RongCloudService.getRandomStr(8));
             userService.save(user);
             GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
@@ -79,7 +90,7 @@ public class UserAppController extends BaseController{
                 return;
             }
             GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
@@ -103,7 +114,7 @@ public class UserAppController extends BaseController{
                 return;
             }
             GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
@@ -111,7 +122,7 @@ public class UserAppController extends BaseController{
 
     /**登录*/
     @ResponseBody
-    @RequestMapping(value = "login")
+    @RequestMapping(value = "login",method = RequestMethod.POST)
     public void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {
@@ -134,7 +145,7 @@ public class UserAppController extends BaseController{
             GsonUtil.response(RuiResultConstant.SUCCESS,result,response);
             result.setOnline(true);
             userService.save(result);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
@@ -154,7 +165,7 @@ public class UserAppController extends BaseController{
             }
             userService.logout(userId);
             GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
@@ -174,7 +185,7 @@ public class UserAppController extends BaseController{
             }
             RuiUser user = userService.get(userId);
             GsonUtil.response(RuiResultConstant.SUCCESS,user,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
@@ -199,10 +210,96 @@ public class UserAppController extends BaseController{
             }
             userService.editInfo(user,params);
             GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }
     }
+
+    /**收货地址列表*/
+    @ResponseBody
+    @RequestMapping(value = "receiveList")
+    public void receiveList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        try {
+            JSONObject params = parseRequest(request);
+            String userId = params.getString("userId");
+            if (checkIsEmpty(userId)){
+                GsonUtil.response(RuiResultConstant.PARAMS_ERROR,null,response);
+                return;
+            }
+            RuiReceiveAddress address = new RuiReceiveAddress();
+            address.setUserId(userId);
+            List<RuiReceiveAddress> result = addressService.findList(address);
+            GsonUtil.response(RuiResultConstant.SUCCESS,result,response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
+        }
+    }
+
+
+    /**添加/删除收货地址*/
+    @ResponseBody
+    @RequestMapping(value = "addDeleteReceive",method = RequestMethod.POST)
+    public void addReceive(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        try {
+            JSONObject params = parseRequest(request);
+            String type = params.getString("type");//1添加 0删除
+            String userId = params.getString("userId");
+
+            if (checkIsEmpty(userId,type)){
+                GsonUtil.response(RuiResultConstant.PARAMS_ERROR,null,response);
+                return;
+            }
+            RuiReceiveAddress address = new RuiReceiveAddress();
+            if (type.equals("1")){
+                String name = params.getString("name");
+                String province = params.getString("province");
+                String location = params.getString("location");
+                String phone = params.getString("phone");
+                boolean isDefault = params.getBoolean("isDefault");
+                address.setUserId(userId);
+                address.setName(name);
+                address.setProvince(province);
+                address.setLocation(location);
+                address.setPhone(phone);
+                address.setDefault(isDefault);
+                addressService.save(address);
+            }else {
+                String receiveId = params.getString("receiveId");
+                address.setId(receiveId);
+                addressService.delete(address);
+            }
+            GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
+        }
+    }
+
+    /**编辑收货地址*/
+    @ResponseBody
+    @RequestMapping(value = "editReceive",method = RequestMethod.POST)
+    public void editReceive(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        try {
+            JSONObject params = parseRequest(request);
+            String userId = params.getString("userId");
+            String receiveId = params.getString("receiveId");
+            if (checkIsEmpty(userId,receiveId)){
+                GsonUtil.response(RuiResultConstant.PARAMS_ERROR,null,response);
+                return;
+            }
+            addressService.editReceive(params);
+            GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
+        }
+    }
+
+
 
 }

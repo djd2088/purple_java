@@ -5,6 +5,7 @@ package com.rui.xb.modules.xb.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.rui.xb.common.utils.StringUtils;
 import com.rui.xb.modules.xb.entity.*;
@@ -66,15 +67,19 @@ public class RuiProductService extends CrudService<RuiProductDao, RuiProduct> {
 		RuiProduct product = new RuiProduct();
 		int pageNo = params.getIntValue("pageNo");
 		int pageSize = params.getIntValue("pageSize");
+		String type = params.getString("type");
+		String userId = params.getString("userId");
 		String categoryId = params.getString("categoryId");
 		String keyWord = params.getString("keyWord");
 		String orderBy = params.getString("orderBy");
 		JSONObject filter = params.getJSONObject("filter");
 		Page<RuiProduct> page = new Page<>(pageNo,pageSize);
 		product.setPage(page);
+		product.setType(type);
 		if (StringUtils.isNotEmpty(categoryId))product.setCategoryId(categoryId);
 		if (StringUtils.isNotEmpty(keyWord))product.setKeyWord(keyWord);
 		if (StringUtils.isNotEmpty(orderBy))product.setOrderBy(orderBy);
+		if (StringUtils.isNotEmpty(userId))product.setUserId(userId);
 //		if (filter != null);
 		return page.setList(dao.findBaseProListByFilter(product));
 	}
@@ -114,6 +119,51 @@ public class RuiProductService extends CrudService<RuiProductDao, RuiProduct> {
 	private void setIsCollect(RuiProduct product,String userId) {
 		RuiProductCollect collect = collectService.getByProductIdAndUserId(product.getId(),userId);
 		if (collect != null)product.setCollect(true);
+	}
+
+
+	@Transactional(readOnly = false)
+	public RuiProduct dispatchIdle(String userId, String title, String desc, String categoryId, String price, String
+			freight, JSONArray pics){
+		RuiProduct product = saveIdleOrRequest(userId, title, desc, categoryId, price, freight,"1");
+		String id = product.getId();
+		for (int i = 0; i < pics.size(); i++){
+			RuiProductPicture picture = new RuiProductPicture();
+			if (i == 0)picture.setIsMainPic(true);
+			picture.setProductId(id);
+			picture.setPicUrl(pics.get(i).toString());
+			pictureService.save(picture);
+		}
+		return product;
+	}
+
+	private RuiProduct saveIdleOrRequest(String userId, String title, String desc, String categoryId, String price, String
+            freight, String type) {
+		RuiProduct product = new RuiProduct();
+		product.setUserId(userId);
+		product.setProductName(title);
+		product.setProductDesc(desc);
+		product.setCategoryId(categoryId);
+		product.setPrice(price);
+		product.setFreight(freight);
+		product.setType(type);
+		dao.insertGetId(product);
+		return product;
+	}
+
+    @Transactional(readOnly = false)
+    public RuiProduct dispatchRequest(String userId, String title, String desc, String categoryId, String price){
+	   return saveIdleOrRequest(userId,title,desc,categoryId,price,"0","2");
+    }
+
+
+    public Page<RuiProduct> collectList(String userId,String type,String pageNo,String pageSize){
+		RuiProduct product = new RuiProduct();
+		Page<RuiProduct> page = new Page<>(Integer.parseInt(pageNo),Integer.parseInt(pageSize));
+		product.setPage(page);
+		product.setType(type);
+		product.setUserId(userId);//实际传入是收藏者id  供collect表使用
+		return page.setList(dao.findCollectProBaseListByUserId(product));
 	}
 
 }

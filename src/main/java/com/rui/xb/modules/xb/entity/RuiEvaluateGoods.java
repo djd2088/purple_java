@@ -22,10 +22,10 @@ public class RuiEvaluateGoods extends DataEntity<RuiEvaluateGoods> {
 	private String evaluateScores;		// 1-5
 	private String isAnonymous;		// 是否匿名
 	private String sellerId;		// seller_id
-	private User user;		// user_id
+	private String userId;
 	private String state;		// 0为正常 1为禁止显示
 	private String evaluateImage;		// evaluate_image
-	private String pre1;		// pre1
+	private String createTime;		// pre1
 	private String pre2;		// pre2
 	private String pre3;		// pre3
 	
@@ -90,15 +90,15 @@ public class RuiEvaluateGoods extends DataEntity<RuiEvaluateGoods> {
 	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
 	}
-	
-	public User getUser() {
-		return user;
+
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	
+
 	@Length(min=0, max=4, message="0为正常 1为禁止显示长度必须介于 0 和 4 之间")
 	public String getState() {
 		return state;
@@ -116,16 +116,15 @@ public class RuiEvaluateGoods extends DataEntity<RuiEvaluateGoods> {
 	public void setEvaluateImage(String evaluateImage) {
 		this.evaluateImage = evaluateImage;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getCreateTime() {
+		return createTime;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
 	}
-	
+
 	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
 	public String getPre2() {
 		return pre2;

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rui.xb.modules.xb.dao.RuiSeqTableDao">
+    
+	<sql id="ruiSeqTableColumns">
+		a.seq_name AS "seqName",
+		a.current_value AS "currentValue",
+		a.increment AS "increment",
+		a.remark AS "remark"
+	</sql>
+	
+	<sql id="ruiSeqTableJoins">
+	</sql>
+    
+	<select id="get" resultType="RuiSeqTable">
+		SELECT 
+			<include refid="ruiSeqTableColumns"/>
+		FROM rui_seq_table a
+		<include refid="ruiSeqTableJoins"/>
+		WHERE a.seq_name = #{seqName}
+	</select>
+
+	<select id="getSeqNextValue" resultType="java.lang.String">
+		select FUN_SEQ (#{seqName})
+	</select>
+	
+	<select id="findList" resultType="RuiSeqTable">
+		SELECT 
+			<include refid="ruiSeqTableColumns"/>
+		FROM rui_seq_table a
+		<include refid="ruiSeqTableJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RuiSeqTable">
+		SELECT 
+			<include refid="ruiSeqTableColumns"/>
+		FROM rui_seq_table a
+		<include refid="ruiSeqTableJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO rui_seq_table(
+			seq_name,
+			current_value,
+			increment,
+			remark
+		) VALUES (
+			#{seqName},
+			#{currentValue},
+			#{increment},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE rui_seq_table SET 	
+			seq_name = #{seqName},
+			current_value = #{currentValue},
+			increment = #{increment},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM rui_seq_table
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

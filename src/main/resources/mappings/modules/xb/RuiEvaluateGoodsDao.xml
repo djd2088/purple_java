@@ -10,10 +10,10 @@
 		a.evaluate_scores AS "evaluateScores",
 		a.is_anonymous AS "isAnonymous",
 		a.seller_id AS "sellerId",
-		a.user_id AS "user.id",
+		a.user_id AS "userId",
 		a.state AS "state",
 		a.evaluate_image AS "evaluateImage",
-		a.pre1 AS "pre1",
+		a.create_time AS "createTime",
 		a.pre2 AS "pre2",
 		a.pre3 AS "pre3",
 		u8.name AS "user.name"
@@ -67,7 +67,6 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_evaluate_goods(
-			id,
 			order_id,
 			order_no,
 			evaluate_content,
@@ -77,21 +76,20 @@
 			user_id,
 			state,
 			evaluate_image,
-			pre1,
+			create_time,
 			pre2,
 			pre3
 		) VALUES (
-			#{id},
 			#{orderId},
 			#{orderNo},
 			#{evaluateContent},
 			#{evaluateScores},
 			#{isAnonymous},
 			#{sellerId},
-			#{user.id},
+			#{userId},
 			#{state},
 			#{evaluateImage},
-			#{pre1},
+			now(),
 			#{pre2},
 			#{pre3}
 		)
@@ -105,10 +103,9 @@
 			evaluate_scores = #{evaluateScores},
 			is_anonymous = #{isAnonymous},
 			seller_id = #{sellerId},
-			user_id = #{user.id},
+			user_id = #{userId},
 			state = #{state},
 			evaluate_image = #{evaluateImage},
-			pre1 = #{pre1},
 			pre2 = #{pre2},
 			pre3 = #{pre3}
 		WHERE id = #{id}

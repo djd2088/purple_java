@@ -3,6 +3,7 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 
 import com.rui.xb.common.persistence.DataEntity;
@@ -15,13 +16,17 @@ import com.rui.xb.common.persistence.DataEntity;
 public class RuiSchoolDict extends DataEntity<RuiSchoolDict> {
 	
 	private static final long serialVersionUID = 1L;
+	@Expose
 	private String name;		// name
 	private String longitude;		// longitude
 	private String latitude;		// latitude
-	private String pre1;		// pre1
-	private String pre2;		// pre2
-	private String pre3;		// pre3
-	
+	private String location;		// pre1
+	private String belong;		// pre2
+	private String level;		// pre3
+	private String sp;		// pre1
+	private String remark;		// pre2
+	private String isDelete;		// pre3
+
 	public RuiSchoolDict() {
 		super();
 	}
@@ -56,32 +61,52 @@ public class RuiSchoolDict extends DataEntity<RuiSchoolDict> {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getLocation() {
+		return location;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
-	}
-	
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
-	}
-	
-	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
-	public String getPre3() {
-		return pre3;
+	public String getBelong() {
+		return belong;
 	}
 
-	public void setPre3(String pre3) {
-		this.pre3 = pre3;
+	public void setBelong(String belong) {
+		this.belong = belong;
 	}
-	
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	public String getSp() {
+		return sp;
+	}
+
+	public void setSp(String sp) {
+		this.sp = sp;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(String isDelete) {
+		this.isDelete = isDelete;
+	}
 }

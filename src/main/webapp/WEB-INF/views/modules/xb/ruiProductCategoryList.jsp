@@ -80,6 +80,17 @@
                 <td style="text-align: center;">${ruiProductCategory.parentName}</td>
                 <td style="text-align: center;">${ruiProductCategory.categoryLevel}</td>
                 <shiro:hasPermission name="xb:ruiProductCategory:edit"><td style="text-align: center">
+					<c:if test="${ruiProductCategory.categoryLevel == 2}">
+						<c:if test="${ruiProductCategory.isCommend == 1}">
+                            <a href="${ctx}/xb/ruiProductCategory/commend?id=${ruiProductCategory.id}&isCommend=0"
+                               onclick="return confirmx('确认要取消推荐吗？', this.href)">取消推荐</a>
+						</c:if>
+						<c:if test="${ruiProductCategory.isCommend == 0}">
+                            <a href="${ctx}/xb/ruiProductCategory/commend?id=${ruiProductCategory.id}&isCommend=1"
+                               onclick="return confirmx('确认设置热门推荐吗？', this.href)">热门推荐</a>
+
+						</c:if>
+					</c:if>
     				<a href="${ctx}/xb/ruiProductCategory/form?id=${ruiProductCategory.id}">修改</a>
 					<a href="${ctx}/xb/ruiProductCategory/delete?id=${ruiProductCategory.id}" onclick="return confirmx('确认要删除该单表吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>

@@ -5,6 +5,8 @@ package com.rui.xb.modules.xb.service;
 
 import java.util.List;
 
+import com.rui.xb.modules.xb.entity.RuiOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ import com.rui.xb.modules.xb.dao.RuiEvaluateGoodsDao;
 @Service
 @Transactional(readOnly = true)
 public class RuiEvaluateGoodsService extends CrudService<RuiEvaluateGoodsDao, RuiEvaluateGoods> {
+
+
+	@Autowired
+	RuiOrderService orderService;
 
 	public RuiEvaluateGoods get(String id) {
 		return super.get(id);
@@ -43,5 +49,16 @@ public class RuiEvaluateGoodsService extends CrudService<RuiEvaluateGoodsDao, Ru
 	public void delete(RuiEvaluateGoods ruiEvaluateGoods) {
 		super.delete(ruiEvaluateGoods);
 	}
-	
+
+
+	public void saveAndUpdateOrder(String orderId,String userId,String content,String score){
+		RuiEvaluateGoods evaluate = new RuiEvaluateGoods();
+		evaluate.setOrderId(orderId);
+		evaluate.setUserId(userId);
+		evaluate.setEvaluateContent(content);
+		evaluate.setEvaluateScores(score);
+		super.save(evaluate);
+
+		//跟新order
+	}
 }

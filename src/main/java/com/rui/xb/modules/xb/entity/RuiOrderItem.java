@@ -3,6 +3,7 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,20 +18,27 @@ import com.rui.xb.common.persistence.DataEntity;
 public class RuiOrderItem extends DataEntity<RuiOrderItem> {
 	
 	private static final long serialVersionUID = 1L;
+	@Expose
 	private Long orderId;		// order_id
+	@Expose
 	private String unitprice;		// 商品单价
+	@Expose
 	private String number;		// 购买数量
+	@Expose
 	private String productId;		// product_id
 	private String sellerId;		// seller_id
 	private String buyerId;		// buyer_id
+	@Expose
 	private String isAppraise;		// 是否评价
-	private String activityid;		// 活动id
-	private String activitytype;		// 活动类型
+	private String activityId;		// 活动id
+	private String activityType;		// 活动类型
 	private Date createTime;		// create_time
 	private Date updateTime;		// update_time
 	private String commisRate;		// 分佣比例
-	private String pre1;		// pre1
-	private String pre2;		// pre2
+	@Expose
+	private String mainPic;		// pre1
+	@Expose
+	private String productName;		// pre2
 	private String pre3;		// pre3
 	
 	public RuiOrderItem() {
@@ -102,25 +110,23 @@ public class RuiOrderItem extends DataEntity<RuiOrderItem> {
 	public void setIsAppraise(String isAppraise) {
 		this.isAppraise = isAppraise;
 	}
-	
-	@Length(min=0, max=11, message="活动id长度必须介于 0 和 11 之间")
-	public String getActivityid() {
-		return activityid;
+
+	public String getActivityId() {
+		return activityId;
 	}
 
-	public void setActivityid(String activityid) {
-		this.activityid = activityid;
-	}
-	
-	@Length(min=0, max=20, message="活动类型长度必须介于 0 和 20 之间")
-	public String getActivitytype() {
-		return activitytype;
+	public void setActivityId(String activityId) {
+		this.activityId = activityId;
 	}
 
-	public void setActivitytype(String activitytype) {
-		this.activitytype = activitytype;
+	public String getActivityType() {
+		return activityType;
 	}
-	
+
+	public void setActivityType(String activityType) {
+		this.activityType = activityType;
+	}
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getCreateTime() {
 		return createTime;
@@ -147,25 +153,23 @@ public class RuiOrderItem extends DataEntity<RuiOrderItem> {
 	public void setCommisRate(String commisRate) {
 		this.commisRate = commisRate;
 	}
-	
-	@Length(min=0, max=255, message="pre1长度必须介于 0 和 255 之间")
-	public String getPre1() {
-		return pre1;
+
+	public String getMainPic() {
+		return mainPic;
 	}
 
-	public void setPre1(String pre1) {
-		this.pre1 = pre1;
-	}
-	
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public void setMainPic(String mainPic) {
+		this.mainPic = mainPic;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
+	public String getProductName() {
+		return productName;
 	}
-	
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
 	public String getPre3() {
 		return pre3;

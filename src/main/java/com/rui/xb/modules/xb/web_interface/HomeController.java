@@ -32,13 +32,13 @@ public class HomeController extends BaseController{
 
     @ResponseBody
     @RequestMapping(value = "index")
-    public void bannerHome(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void bannerHome(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {
             //RuiHomeIndex index = homeIndexService.getByType(RuiHomeIndex.TYPE.BANNER.name());
             List<RuiHomeIndex> index = homeIndexService.findList(null);
             GsonUtil.response(RuiResultConstant.SUCCESS,index,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }

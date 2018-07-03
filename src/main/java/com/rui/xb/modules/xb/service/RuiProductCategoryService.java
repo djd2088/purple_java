@@ -47,4 +47,7 @@ public class RuiProductCategoryService extends CrudService<RuiProductCategoryDao
 	public List<RuiProductCategory> findParentByCategoryLevel(String level){
 		return dao.findParentByCategoryLevel(level);
 	}
+
+
+
 }

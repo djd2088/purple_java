@@ -11,7 +11,7 @@
 		a.create_time AS "createTime",
 		a.update_time AS "updateTime",
 		a.category_level AS "categoryLevel",
-		a.pre2 AS "pre2",
+		a.is_commend AS "isCommend",
 		a.pre3 AS "pre3"
 	</sql>
 
@@ -41,14 +41,18 @@
 			<if test="parentId != null and parentId != ''">
 				AND a.parent_id = #{parentId}
 			</if>
+			<if test="isCommend != null and isCommend != ''">
+				AND a.is_commend = #{isCommend}
+			</if>
 		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-			</otherwise>
-		</choose>
+		ORDER BY a.category_level ASC ,a.create_time ASC
+		<!--<choose>-->
+			<!--<when test="page !=null and page.orderBy != null and page.orderBy != ''">-->
+				<!--ORDER BY ${page.orderBy}-->
+			<!--</when>-->
+			<!--<otherwise>-->
+			<!--</otherwise>-->
+		<!--</choose>-->
 	</select>
 	
 	<select id="findAllList" resultType="RuiProductCategory">
@@ -79,7 +83,6 @@
 			create_time,
 			update_time,
 			category_level,
-			pre2,
 			pre3
 		) VALUES (
 			#{name},
@@ -89,7 +92,6 @@
 			now(),
 			now(),
 			#{categoryLevel},
-			#{pre2},
 			#{pre3}
 		)
 	</insert>
@@ -103,7 +105,7 @@
 			create_time = #{createTime},
 			update_time = now(),
 			category_level = #{categoryLevel},
-			pre2 = #{pre2},
+			is_commend = #{isCommend},
 			pre3 = #{pre3}
 		WHERE id = #{id}
 	</update>
@@ -118,10 +120,8 @@
 		SELECT DISTINCT
 		<include refid="ruiProductCategoryColumns"/>
 		FROM rui_product_category a
-		<include refid="ruiProductCategoryJoins"/>
-		LEFT JOIN rui_product_category b ON a.id = b.parent_id
 		<where>
-			 b.category_level = #{param}
+			 a.category_level = #{param}
 		</where>
 	</select>
 

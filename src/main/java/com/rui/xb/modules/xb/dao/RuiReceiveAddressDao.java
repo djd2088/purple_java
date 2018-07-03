@@ -5,18 +5,16 @@ package com.rui.xb.modules.xb.dao;
 
 import com.rui.xb.common.persistence.CrudDao;
 import com.rui.xb.common.persistence.annotation.MyBatisDao;
-import com.rui.xb.modules.xb.entity.RuiOrder;
+import com.rui.xb.modules.xb.entity.RuiReceiveAddress;
 
 /**
  * 单表生成DAO接口
  * @author ThinkGem
- * @version 2018-06-12
+ * @version 2018-06-29
  */
 @MyBatisDao
-public interface RuiOrderDao extends CrudDao<RuiOrder> {
+public interface RuiReceiveAddressDao extends CrudDao<RuiReceiveAddress> {
 
-    int insertGetId(RuiOrder order);
 
-    void cancelOrder(String orderId);
-	
+    void setNoDefault(String userId);
 }

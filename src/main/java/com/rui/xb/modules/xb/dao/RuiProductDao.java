@@ -25,4 +25,8 @@ public interface RuiProductDao extends CrudDao<RuiProduct> {
     List<RuiProduct> findBaseProListByFilter(RuiProduct product);
 
     RuiProduct getProductDetailById(Integer productId);
+
+    int insertGetId(RuiProduct product);
+
+    List<RuiProduct> findCollectProBaseListByUserId(RuiProduct product);
 }

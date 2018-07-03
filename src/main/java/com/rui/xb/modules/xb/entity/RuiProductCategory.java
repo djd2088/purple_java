@@ -3,6 +3,7 @@
  */
 package com.rui.xb.modules.xb.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Date;
@@ -18,15 +19,18 @@ import com.rui.xb.common.persistence.DataEntity;
 public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 	
 	private static final long serialVersionUID = 1L;
+	@Expose
 	private String name;		// name
 	private String description;		// description
 //	private RuiProductCategory parent;		// parent_id
+	@Expose
 	private String parentId;
 	private String isDelete;		// is_delete
 	private Date createTime;		// create_time
 	private Date updateTime;		// update_time
+	@Expose
 	private String categoryLevel;		// pre1
-	private String pre2;		// pre2
+	private String isCommend;		// pre2
 	private String pre3;		// pre3
 
 
@@ -111,15 +115,14 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 		this.categoryLevel = categoryLevel;
 	}
 
-	@Length(min=0, max=255, message="pre2长度必须介于 0 和 255 之间")
-	public String getPre2() {
-		return pre2;
+	public String getIsCommend() {
+		return isCommend;
 	}
 
-	public void setPre2(String pre2) {
-		this.pre2 = pre2;
+	public void setIsCommend(String isCommend) {
+		this.isCommend = isCommend;
 	}
-	
+
 	@Length(min=0, max=255, message="pre3长度必须介于 0 和 255 之间")
 	public String getPre3() {
 		return pre3;

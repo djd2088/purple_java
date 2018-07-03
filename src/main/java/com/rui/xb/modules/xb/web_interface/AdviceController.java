@@ -10,6 +10,7 @@ import com.rui.xb.modules.xb.utils.RongCloudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ public class AdviceController extends BaseController{
 
     /**提交意见/赞助/加入*/
     @ResponseBody
-    @RequestMapping(value = "submit")
+    @RequestMapping(value = "submit",method = RequestMethod.POST)
     public void sendMsg(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         try {
@@ -50,7 +51,7 @@ public class AdviceController extends BaseController{
             advice.setContent(content);
             bugAdviceService.save(advice);
             GsonUtil.response(RuiResultConstant.SUCCESS,null,response);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             GsonUtil.response(RuiResultConstant.SERVER_ERROR,null,response);
         }

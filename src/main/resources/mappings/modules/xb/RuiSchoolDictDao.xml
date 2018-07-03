@@ -7,9 +7,12 @@
 		a.name AS "name",
 		a.longitude AS "longitude",
 		a.latitude AS "latitude",
-		a.pre1 AS "pre1",
-		a.pre2 AS "pre2",
-		a.pre3 AS "pre3"
+		a.location AS "location",
+		a.belong AS "belong",
+		a.level AS "level",
+		a.sp AS  "sp",
+		a.remark AS "remark",
+		a.is_delete AS "isDelete"
 	</sql>
 	
 	<sql id="ruiSchoolDictJoins">
@@ -29,7 +32,7 @@
 		FROM rui_school_dict a
 		<include refid="ruiSchoolDictJoins"/>
 		<where>
-			
+			a.is_delete = 0 ORDER BY sp ASC
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -59,32 +62,39 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_school_dict(
-			id,
 			name,
 			longitude,
 			latitude,
-			pre1,
-			pre2,
-			pre3
+			location,
+			belong,
+			level,
+			sp,
+			remark,
+			is_delete
 		) VALUES (
-			#{id},
 			#{name},
 			#{longitude},
 			#{latitude},
-			#{pre1},
-			#{pre2},
-			#{pre3}
+			#{location},
+			#{belong},
+			#{level},
+			#{sp},
+			#{remark},
+			#{isDelete}
 		)
 	</insert>
-	
+
 	<update id="update">
 		UPDATE rui_school_dict SET 	
 			name = #{name},
 			longitude = #{longitude},
 			latitude = #{latitude},
-			pre1 = #{pre1},
-			pre2 = #{pre2},
-			pre3 = #{pre3}
+			location = #{location},
+			belong = #{belong},
+			level = #{level},
+			sp = #{sp},
+			remark = #{remark},
+			is_delete = #{isDelete}
 		WHERE id = #{id}
 	</update>
 	

@@ -78,7 +78,6 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_product_picture(
-			id,
 			product_id,
 			name,
 			is_main_pic,
@@ -88,7 +87,6 @@
 			pre2,
 			pre3
 		) VALUES (
-			#{id},
 			#{productId},
 			#{name},
 			#{isMainPic},

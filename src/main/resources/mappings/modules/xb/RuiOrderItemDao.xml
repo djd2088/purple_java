@@ -11,13 +11,13 @@
 		a.seller_id AS "sellerId",
 		a.buyer_id AS "buyerId",
 		a.is_appraise AS "isAppraise",
-		a.activityid AS "activityid",
-		a.activitytype AS "activitytype",
+		a.activity_id AS "activityId",
+		a.activity_type AS "activityType",
 		a.create_time AS "createTime",
 		a.update_time AS "updateTime",
 		a.commis_rate AS "commisRate",
-		a.pre1 AS "pre1",
-		a.pre2 AS "pre2",
+		a.main_pic AS "mainPic",
+		a.product_name AS "productName",
 		a.pre3 AS "pre3"
 	</sql>
 	
@@ -38,7 +38,9 @@
 		FROM rui_order_item a
 		<include refid="ruiOrderItemJoins"/>
 		<where>
-			
+			<if test="orderId != null and orderId !=''">
+				a.order_id = #{orderId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -68,38 +70,32 @@
 	
 	<insert id="insert">
 		INSERT INTO rui_order_item(
-			id,
 			order_id,
 			unitprice,
 			number,
 			product_id,
 			seller_id,
 			buyer_id,
-			is_appraise,
-			activityid,
-			activitytype,
+			activity_id,
+			activity_type,
 			create_time,
 			update_time,
-			commis_rate,
-			pre1,
-			pre2,
+			main_pic,
+			product_name,
 			pre3
 		) VALUES (
-			#{id},
 			#{orderId},
 			#{unitprice},
 			#{number},
 			#{productId},
 			#{sellerId},
 			#{buyerId},
-			#{isAppraise},
-			#{activityid},
-			#{activitytype},
-			#{createTime},
-			#{updateTime},
-			#{commisRate},
-			#{pre1},
-			#{pre2},
+			#{activityId},
+			#{activityType},
+			now(),
+			now(),
+			#{mainPic},
+			#{productName},
 			#{pre3}
 		)
 	</insert>
@@ -113,13 +109,13 @@
 			seller_id = #{sellerId},
 			buyer_id = #{buyerId},
 			is_appraise = #{isAppraise},
-			activityid = #{activityid},
-			activitytype = #{activitytype},
+			activity_id = #{activityId},
+			activity_type = #{activityType},
 			create_time = #{createTime},
 			update_time = #{updateTime},
 			commis_rate = #{commisRate},
-			pre1 = #{pre1},
-			pre2 = #{pre2},
+			main_pic = #{mainPic},
+			product_name = #{productName},
 			pre3 = #{pre3}
 		WHERE id = #{id}
 	</update>
