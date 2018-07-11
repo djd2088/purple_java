@@ -54,7 +54,19 @@
 			<!--</otherwise>-->
 		<!--</choose>-->
 	</select>
-	
+
+	<select id="findByParentId" resultType="RuiProductCategory">
+		SELECT
+		<include refid="ruiProductCategoryColumns"/>
+		FROM rui_product_category a
+		<include refid="ruiProductCategoryJoins"/>
+		<where>
+			a.parent_id = #{parentId}
+		</where>
+		ORDER BY a.category_level ASC ,a.create_time ASC
+	</select>
+
+
 	<select id="findAllList" resultType="RuiProductCategory">
 		SELECT 
 			<include refid="ruiProductCategoryColumns"/>

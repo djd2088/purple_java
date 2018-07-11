@@ -48,6 +48,12 @@ public class RuiProductCategoryService extends CrudService<RuiProductCategoryDao
 		return dao.findParentByCategoryLevel(level);
 	}
 
-
+	public List<RuiProductCategory> findSubClass(RuiProductCategory ruiProductCategory){
+		List<RuiProductCategory> categories = super.findList(ruiProductCategory);
+		for (RuiProductCategory category : categories){
+			category.setSubClass(dao.findByParentId(category.getId()));
+		}
+		return categories;
+	}
 
 }

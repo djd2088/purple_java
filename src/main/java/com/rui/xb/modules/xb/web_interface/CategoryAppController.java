@@ -45,7 +45,12 @@ public class CategoryAppController extends BaseController{
             }else {
                 category.setParentId(parentId);
             }
-            List<RuiProductCategory> categories = categoryService.findList(category);
+            List<RuiProductCategory> categories;
+            if (parentId.equals("0")){
+                categories = categoryService.findList(category);
+            }else {
+                categories = categoryService.findSubClass(category);
+            }
             GsonUtil.response(RuiResultConstant.SUCCESS,categories,response);
         } catch (Exception e) {
             e.printStackTrace();

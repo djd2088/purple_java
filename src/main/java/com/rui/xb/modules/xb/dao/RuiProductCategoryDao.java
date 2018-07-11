@@ -18,5 +18,7 @@ import java.util.List;
 public interface RuiProductCategoryDao extends CrudDao<RuiProductCategory> {
 
     List<RuiProductCategory> findParentByCategoryLevel(String level);
+
+    List<RuiProductCategory> findByParentId(String parentId);
 	
 }

@@ -7,6 +7,8 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.rui.xb.common.persistence.DataEntity;
@@ -35,6 +37,10 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 
 
 	private String parentName;
+
+
+	@Expose
+	private List<RuiProductCategory> subClass;
 	
 	public RuiProductCategory() {
 		super();
@@ -139,5 +145,13 @@ public class RuiProductCategory extends DataEntity<RuiProductCategory> {
 
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
+	}
+
+	public List<RuiProductCategory> getSubClass() {
+		return subClass;
+	}
+
+	public void setSubClass(List<RuiProductCategory> subClass) {
+		this.subClass = subClass;
 	}
 }
